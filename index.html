@@ -6527,7 +6527,7 @@ CALENDLY INTEGRATION SETUP GUIDE:
          */
         
         // TODO: Replace with your actual Google Apps Script Web App URL
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzu-amOgNniDDchTWVrPNLmRHj8yJrw3z_S7GqozNIciWC1RpFPAAaij9t7oD6-aljW/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwTVirCnPW3HWTgyoKNjiajjM__A7sBlmWZn04bP1_OW6p5hKKoV13OqhCZsGOi7V8/exec';
         
         async function submitToGoogleSheets(quizData) {
             console.log('Starting Google Sheets submission with data:', quizData);
@@ -6552,15 +6552,13 @@ CALENDLY INTEGRATION SETUP GUIDE:
                 console.log('Formatted sheet data:', sheetData);
                 console.log('Sending to URL:', GOOGLE_SCRIPT_URL);
                 
-                // Send to Google Sheets
+                // Send to Google Sheets using FormData to avoid CORS preflight
+                const formData = new FormData();
+                formData.append('data', JSON.stringify(sheetData));
+                
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(sheetData)
+                    body: formData
                 });
                 
                 console.log('Response status:', response.status);

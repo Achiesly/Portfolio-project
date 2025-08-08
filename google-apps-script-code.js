@@ -1,51 +1,45 @@
-/**
- * Google Apps Script for Quiz Lead Capture
- * Website: Jeremiah Harcharran - Performance Creative Architect
- * 
- * SETUP INSTRUCTIONS:
- * 1. Go to script.google.com
- * 2. Create a new project
- * 3. Delete the default code and paste this entire file
- * 4. Create a new Google Sheets file (or use existing one)
- * 5. Copy the Google Sheets ID from the URL
- * 6. Go back to Apps Script and click "Deploy" > "New deployment"
- * 7. Choose "Web app" as the type
- * 8. Set Execute as: "Me"
- * 9. Set Who has access: "Anyone"
- * 10. Click Deploy and copy the Web App URL
- * 11. Update GOOGLE_SCRIPT_URL in your HTML file with this URL
- */
-
-https://script.google.com/macros/s/AKfycbxFDNyUW6hIS7Ul-z3WXphy9UYCyCdt3CGWiOt6HDyw6goETDnqQAxjJI_1E7kHvtrp/exec
-AKfycbxFDNyUW6hIS7Ul-z3WXphy9UYCyCdt3CGWiOt6HDyw6goETDnqQAxjJI_1E7kHvtrp
-
 function doPost(e) {
+  // Set CORS headers for all responses
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    'Content-Type': 'application/json'
+  };
+  
   try {
+    // Check if request has data
+    if (!e || (!e.parameter && !e.postData)) {
+      throw new Error('No data received in request');
+    }
+    
     // Get the active spreadsheet (must be bound to this script)
     const sheet = SpreadsheetApp.getActiveSheet();
     
     // If no data in first row, add headers
     if (sheet.getLastRow() === 0) {
-      const headers = [
-        'Timestamp', 'Full Name', 'Email', 'Platform', 
-        'Niche', 'Website', 'Ad Spend', 'CTR', 
-        'Conversion Rate', 'Timezone', 'Referrer', 'User Agent'
-      ];
-      sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-      
-      // Format headers
-      sheet.getRange(1, 1, 1, headers.length)
-           .setBackground('#4285F4')
-           .setFontColor('white')
-           .setFontWeight('bold');
+      sheet.appendRow([
+        'Timestamp', 'Full Name', 'Email', 'Platform', 'Niche', 
+        'Website', 'Ad Spend', 'CTR', 'Conversion Rate', 'Timezone', 
+        'Referrer', 'User Agent'
+      ]);
     }
     
-    // Parse the incoming data
-    const data = JSON.parse(e.postData.contents);
+    // Parse the incoming data (handle both FormData and direct JSON)
+    let data;
+    if (e.parameter && e.parameter.data) {
+      // Data sent as FormData
+      data = JSON.parse(e.parameter.data);
+    } else if (e.postData && e.postData.contents) {
+      // Data sent as JSON
+      data = JSON.parse(e.postData.contents);
+    } else {
+      throw new Error('No valid data found in request');
+    }
     
     // Validate required fields
     if (!data.email || !data.fullName) {
-      throw new Error('Missing required fields: email and fullName');
+      throw new Error('Missing required fields: name and email');
     }
     
     // Prepare row data in the same order as headers
@@ -70,29 +64,12 @@ function doPost(e) {
     // Auto-resize columns for better readability
     sheet.autoResizeColumns(1, rowData.length);
     
-    // Optional: Send email notification (uncomment if needed)
-    /*
-    MailApp.sendEmail({
-      to: 'your-email@example.com',
-      subject: 'New Quiz Lead: ' + data.fullName,
-      body: 'New lead captured:\n\n' + 
-            'Name: ' + data.fullName + '\n' +
-            'Email: ' + data.email + '\n' +
-            'Platform: ' + data.platform + '\n' +
-            'Niche: ' + data.niche + '\n' +
-            'Website: ' + data.website + '\n' +
-            'Ad Spend: $' + data.adSpend + '\n\n' +
-            'View full data: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl()
-    });
-    */
-    
     // Return success response
     return ContentService
       .createTextOutput(JSON.stringify({
         status: 'success',
-        message: 'Lead captured successfully',
-        timestamp: new Date().toISOString(),
-        rowNumber: sheet.getLastRow()
+        message: 'Data saved successfully',
+        timestamp: new Date().toISOString()
       }))
       .setMimeType(ContentService.MimeType.JSON);
       
@@ -111,40 +88,20 @@ function doPost(e) {
   }
 }
 
-// Test function for development
-function testSubmission() {
-  const testData = {
-    timestamp: new Date().toISOString(),
-    fullName: 'John Doe',
-    email: 'john@example.com',
-    platform: 'Facebook/Instagram',
-    niche: 'E-commerce',
-    website: 'https://example.com',
-    adSpend: '15000',
-    ctr: '2.8',
-    conversionRate: '4.2',
-    timezone: 'America/New_York',
-    referrer: 'https://google.com',
-    userAgent: 'Mozilla/5.0...'
-  };
-  
-  const mockEvent = {
-    postData: {
-      contents: JSON.stringify(testData)
-    }
-  };
-  
-  const result = doPost(mockEvent);
-  Logger.log(result.getContent());
-  return result.getContent();
+// Handle preflight OPTIONS requests (CRITICAL FOR CORS)
+function doOptions() {
+  return ContentService
+    .createTextOutput('')
+    .setMimeType(ContentService.MimeType.TEXT);
 }
 
-// Function to set up triggers (optional)
-function setupTriggers() {
-  // Delete existing triggers
-  const triggers = ScriptApp.getProjectTriggers();
-  triggers.forEach(trigger => ScriptApp.deleteTrigger(trigger));
-  
-  // Add any recurring triggers if needed
-  // ScriptApp.newTrigger('someFunction').timeBased().everyHours(1).create();
+// Handle GET requests (for testing)
+function doGet() {
+  return ContentService
+    .createTextOutput(JSON.stringify({
+      status: 'success',
+      message: 'Google Apps Script is working! Use POST to submit data.',
+      timestamp: new Date().toISOString()
+    }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
