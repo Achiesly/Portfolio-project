@@ -16,6 +16,9 @@
  * 11. Update GOOGLE_SCRIPT_URL in your HTML file with this URL
  */
 
+https://script.google.com/macros/s/AKfycbxFDNyUW6hIS7Ul-z3WXphy9UYCyCdt3CGWiOt6HDyw6goETDnqQAxjJI_1E7kHvtrp/exec
+AKfycbxFDNyUW6hIS7Ul-z3WXphy9UYCyCdt3CGWiOt6HDyw6goETDnqQAxjJI_1E7kHvtrp
+
 function doPost(e) {
   try {
     // Get the active spreadsheet (must be bound to this script)
