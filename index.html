@@ -1,114 +1,4 @@
 <!DOCTYPE html>
-<!--
-GOOGLE SHEETS + CALENDLY INTEGRATION SETUP GUIDE:
-=================================================
-
-## PART 1: GOOGLE SHEETS SETUP
-
-### 1. CREATE GOOGLE SHEET:
-   - Go to sheets.google.com
-   - Create new sheet: "Quiz Leads"
-   - Add headers: Timestamp | Full Name | Email | Platform | Niche | Website | Ad Spend | CTR | Conversion Rate | Timezone | Referrer | User Agent
-
-### 2. CREATE GOOGLE APPS SCRIPT:
-   - Go to script.google.com → New Project
-   - Paste the provided code (see line ~5900 for full script)
-   - Deploy as Web App (Execute as: Me, Access: Anyone)
-   - Copy the Web App URL
-
-### 3. UPDATE THIS FILE:
-   - Replace GOOGLE_SCRIPT_URL (line ~5818) with your Web App URL
-   - Test integration
-
-## PART 2: CALENDLY SETUP
-   ✅ COMPLETED: Calendly URLs updated to https://calendly.com/jeremiah-harcharran-qrd_/30min
-   - All instances replaced successfully
-
-## WORKFLOW:
-User completes quiz → Data saved to Google Sheets → Calendly booking widget → Meeting scheduled
-
-✅ AUTO GOOGLE SHEETS INTEGRATION
-✅ ERROR HANDLING & RETRY LOGIC  
-✅ LOCAL STORAGE BACKUP
-✅ LOADING STATES & UX
-✅ ANALYTICS READY
-✅ MOBILE OPTIMIZED
-
--->
-<!--
-ABOUT ME & SERVICES REDESIGN COMPLETED:
-=====================================
-
-✅ DESIGN SYSTEM INTEGRATION:
-   - Modern glass-morphism cards with hover effects
-   - Consistent typography and spacing with rest of site
-   - Gradient backgrounds and animated elements
-   - Professional color scheme and shadows
-
-✅ ABOUT ME SECTION:
-   - Hero-style header with gradient text
-   - Grid layout with professional image placement
-   - Enhanced social media icons with hover animations
-   - Responsive design for all screen sizes
-   - Smooth scroll-triggered animations
-
-✅ SERVICES SECTION:
-   - Three-column service grid with hover effects
-   - Service numbering and feature tags
-   - Image placeholders with fallback designs
-   - Performance-focused content structure
-   - Mobile-first responsive design
-
-✅ TECHNICAL IMPROVEMENTS:
-   - Intersection Observer animations
-   - CSS Grid and Flexbox layouts
-   - Custom hover states and transitions
-   - Optimized for performance and accessibility
-   - Placeholder image system with SVG fallbacks
-
-✅ MEDIA STRUCTURE CREATED:
-   - /media/about/profile-photo.jpg
-   - /media/services/creative-strategy.jpg
-   - /media/services/performance-ads.jpg
-   - /media/services/brand-consulting.jpg
-
-NEXT STEPS FOR CLIENT:
-- Replace placeholder images with actual photos
-- Update social media links with real URLs
-- Customize service descriptions as needed
-- Test on all devices and browsers
-
-CALENDLY INTEGRATION SETUP GUIDE:
-================================
-
-1. CALENDLY ACCOUNT SETUP:
-   - Create your Calendly account at https://calendly.com
-   - Set up your event type (e.g., "30-Minute Strategy Call")
-   - Note your Calendly username and event slug
-
-2. UPDATE THE FOLLOWING LINES:
-   ✅ COMPLETED: All Calendly URLs updated to https://calendly.com/jeremiah-harcharran-qrd_/30min
-   - Line ~6000: Inline widget URL ✅
-   - Line ~6095: Popup widget URL ✅
-   - Line ~6104: Fallback URL ✅
-   - Line ~6271: Quiz completion URL ✅
-   - Line ~6315: Quiz fallback URL ✅
-
-3. FEATURES INCLUDED:
-   ✅ Quiz completion leads to Calendly booking
-   ✅ Direct booking button bypasses quiz
-   ✅ Booking confirmation handling
-   ✅ Analytics tracking ready
-   ✅ Mobile responsive design
-   ✅ Custom styling to match brand
-
-4. NEXT STEPS:
-   - Replace placeholder Calendly URLs with your actual URLs
-   - Test both quiz → booking and direct booking flows
-   - Set up Google Sheets integration for quiz data
-   - Configure analytics tracking if needed
-
--->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6512,21 +6402,8 @@ CALENDLY INTEGRATION SETUP GUIDE:
             }
         }
         
-        // ===============================================
         // GOOGLE SHEETS INTEGRATION
-        // ===============================================
-        
-        /**
-         * Submit quiz data to Google Sheets via Google Apps Script Web App
-         * 
-         * SETUP INSTRUCTIONS:
-         * 1. Create a new Google Sheet for lead capture
-         * 2. Create a Google Apps Script project (script.google.com)
-         * 3. Replace the GOOGLE_SCRIPT_URL below with your deployed Web App URL
-         * 4. Use the provided Google Apps Script code (see comments below)
-         */
-        
-        // TODO: Replace with your actual Google Apps Script Web App URL
+ 
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwTVirCnPW3HWTgyoKNjiajjM__A7sBlmWZn04bP1_OW6p5hKKoV13OqhCZsGOi7V8/exec';
         
         async function submitToGoogleSheets(quizData) {
