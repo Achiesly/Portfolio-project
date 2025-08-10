@@ -6294,12 +6294,98 @@
                     document.addEventListener = window.originalAddEventListener;
                 }
                 
-                // Re-enable Wistia players
-                document.querySelectorAll('wistia-player, [class*="wistia"]').forEach(el => {
-                    el.style.pointerEvents = 'auto';
-                    el.style.visibility = 'visible';
-                    el.style.zIndex = 'auto';
+                // Re-enable and restore Wistia players completely
+                const wistiaPlayers = document.querySelectorAll('wistia-player');
+                console.log('Restoring', wistiaPlayers.length, 'Wistia players');
+                wistiaPlayers.forEach(player => {
+                    player.style.cssText = `
+                        display: block !important;
+                        visibility: visible !important;
+                        pointer-events: auto !important;
+                        z-index: auto !important;
+                        opacity: 1 !important;
+                    `;
                 });
+                
+                // Re-enable other Wistia-related elements
+                document.querySelectorAll('[class*="wistia"], [id*="wistia"]').forEach(el => {
+                    // Skip wistia-player as it's handled above
+                    if (el.tagName !== 'WISTIA-PLAYER') {
+                        el.style.cssText = `
+                            display: block !important;
+                            visibility: visible !important;
+                            pointer-events: auto !important;
+                            z-index: auto !important;
+                        `;
+                    }
+                });
+                
+                // Re-enable Wistia functionality
+                if (window.Wistia) {
+                    window.Wistia._disabled = false;
+                    if (window.Wistia.api) {
+                        window.Wistia.api._disabled = false;
+                    }
+                    
+                    // Give Wistia a moment to reinitialize and restart all players
+                    setTimeout(() => {
+                        // Try different Wistia reinitialization methods
+                        if (window.Wistia.reinitialize) {
+                            window.Wistia.reinitialize();
+                        }
+                        
+                        // Force reinitialize all Wistia players
+                        if (window._wq) {
+                            window._wq.push({ "_all": function(video) {
+                                video.ready(function() {
+                                    video.play();
+                                    video.pause();
+                                    // This restarts the player's internal state
+                                });
+                            }});
+                        }
+                        
+                        // Alternative approach - trigger Wistia's initialization
+                        if (window.Wistia.api && window.Wistia.api.replaceWith) {
+                            wistiaPlayers.forEach(player => {
+                                const videoId = player.getAttribute('data-video-id') || player.getAttribute('data-wistia-id');
+                                if (videoId) {
+                                    // Refresh the player
+                                    player.innerHTML = '';
+                                    window.Wistia.api.replaceWith(player, videoId);
+                                }
+                            });
+                        }
+                        
+                        // Final approach - manually trigger Wistia scan
+                        if (window.Wistia && window.Wistia.initialize) {
+                            window.Wistia.initialize();
+                        }
+                        
+                        // Force a complete Wistia rescan of the page
+                        if (window._wq) {
+                            window._wq.push(function() {
+                                // This tells Wistia to look for new/restored players
+                                if (window.Wistia.ready) {
+                                    window.Wistia.ready();
+                                }
+                            });
+                        }
+                        
+                        console.log('Wistia players reinitialized');
+                        
+                        // Nuclear option - reload Wistia script functionality
+                        const wistiaScript = document.querySelector('script[src*="wistia"]');
+                        if (wistiaScript && window.Wistia) {
+                            // Trigger a Wistia environment refresh
+                            setTimeout(() => {
+                                if (window.Wistia.env && window.Wistia.env.refresh) {
+                                    window.Wistia.env.refresh();
+                                }
+                            }, 100);
+                        }
+                    }, 200);
+                }
             }
             
             // Reset body completely
@@ -8066,197 +8152,6 @@
             initializeVideoOptimization();
         });
 
-        function initializeVideoOptimization() {
-            const videos = document.querySelectorAll('.reel-video, .portfolio-video');
-            const options = {
-                root: null,
-                rootMargin: '50px',
-                threshold: 0.1
-            };
-
-            const videoObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const video = entry.target;
-                    
-                    if (entry.isIntersecting) {
-                        // Load video when it comes into view
-                        if (video.readyState === 0) {
-                            video.load();
-                        }
-                        
-                        // Add hover/click autoplay for desktop
-                        if (!isMobile) {
-                            addVideoInteraction(video);
-                        }
-                        
-                        // Auto-play for mobile when in center viewport
-                        if (isMobile && isInCenterViewport(entry)) {
-                            playVideoSafely(video);
-                        }
-                    } else {
-                        // Pause video when out of view to save bandwidth
-                        if (!video.paused) {
-                            video.pause();
-                        }
-                    }
-                });
-            }, options);
-
-            videos.forEach(video => {
-                videoObserver.observe(video);
-                
-                // Add loading state
-                video.addEventListener('loadstart', () => {
-                    video.classList.add('loading');
-                });
-                
-                video.addEventListener('canplay', () => {
-                    video.classList.remove('loading');
-                    video.classList.add('loaded');
-                });
-                
-                // Handle errors gracefully
-                video.addEventListener('error', () => {
-                    handleVideoError(video);
-                });
-            });
-        }
-
-        function addVideoInteraction(video) {
-            const wrapper = video.closest('.reel-wrapper, .portfolio-reel-wrapper');
-            
-            wrapper.addEventListener('mouseenter', () => {
-                playVideoSafely(video);
-            });
-            
-            wrapper.addEventListener('mouseleave', () => {
-                video.pause();
-                video.currentTime = 0;
-            });
-            
-            wrapper.addEventListener('click', () => {
-                if (video.paused) {
-                    playVideoSafely(video);
-                } else {
-                    video.pause();
-                }
-            });
-        }
-
-        function playVideoSafely(video) {
-            const playPromise = video.play();
-            
-            if (playPromise !== undefined) {
-                playPromise
-                    .then(() => {
-                        // Video started playing successfully
-                        video.classList.add('playing');
-                    })
-                    .catch(error => {
-                        // Auto-play was prevented
-                        showPlayButton(video);
-                    });
-            }
-        }
-
-        function showPlayButton(video) {
-            const wrapper = video.closest('.reel-wrapper, .portfolio-reel-wrapper');
-            let playButton = wrapper.querySelector('.video-play-button');
-            
-            if (!playButton) {
-                playButton = document.createElement('button');
-                playButton.className = 'video-play-button';
-                playButton.innerHTML = '▶';
-                playButton.addEventListener('click', () => {
-                    playVideoSafely(video);
-                    playButton.style.display = 'none';
-                });
-                wrapper.appendChild(playButton);
-            }
-            
-            playButton.style.display = 'flex';
-        }
-
-        function isInCenterViewport(entry) {
-            const rect = entry.boundingClientRect;
-            const centerY = window.innerHeight / 2;
-            return rect.top <= centerY && rect.bottom >= centerY;
-        }
-
-        function handleVideoError(video) {
-            const wrapper = video.closest('.reel-wrapper, .portfolio-reel-wrapper');
-            
-            // Show fallback image if video fails
-            const img = video.querySelector('img');
-            if (img) {
-                video.style.display = 'none';
-                img.style.display = 'block';
-            }
-            
-            // Add error indicator
-            wrapper.classList.add('video-error');
-        }
-
-        // Add CSS for video loading states and play button
-        const videoStyles = document.createElement('style');
-        videoStyles.textContent = `
-            .reel-video.loading,
-            .portfolio-video.loading {
-                filter: blur(2px);
-                opacity: 0.7;
-            }
-            
-            .reel-video.loaded,
-            .portfolio-video.loaded {
-                filter: none;
-                opacity: 1;
-                transition: filter 0.3s ease, opacity 0.3s ease;
-            }
-            
-            .video-play-button {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba(0, 255, 136, 0.9);
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 60px;
-                height: 60px;
-                font-size: 20px;
-                cursor: pointer;
-                display: none;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.3s ease;
-                z-index: 10;
-            }
-            
-            .video-play-button:hover {
-                background: var(--accent-green);
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-            
-            .video-error {
-                opacity: 0.7;
-            }
-            
-            .video-error::after {
-                content: "⚠ Video unavailable";
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba(0, 0, 0, 0.8);
-                color: white;
-                padding: 0.5rem 1rem;
-                border-radius: 8px;
-                font-size: 0.875rem;
-                z-index: 10;
-            }
-        `;
-        document.head.appendChild(videoStyles);
     </script>
 </body>
-</html>
+</html>s
