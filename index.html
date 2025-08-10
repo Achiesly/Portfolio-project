@@ -14,8 +14,8 @@
     
     <!-- Wistia Scripts - Loaded with proper isolation -->
     <script src="https://fast.wistia.com/assets/external/E-v1.js" type="text/javascript" async></script>
-    <link rel="stylesheet" href="https://fast.wistia.com/assets/external/E-v1.css" rel="stylesheet">
-   
+    <link href="https://fast.wistia.com/assets/external/E-v1.css" rel="stylesheet" type="text/css" />
+
    <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
@@ -3151,6 +3151,7 @@
             left: 0;
             right: auto;
             text-align: left;
+
         }
         
         @media (max-width: 768px) {
@@ -4186,7 +4187,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 1);
             backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
@@ -4460,6 +4461,20 @@
             color: rgba(255, 255, 255, 0.4);
         }
         
+        /* Error state for input fields */
+        .quiz-input.error,
+        .quiz-textarea.error {
+            border-color: red !important;
+            background: rgba(255, 71, 87, 0.1) !important;
+            box-shadow: 0 0 20px rgba(255, 71, 87, 0.3) !important;
+        }
+        
+        .quiz-input.error::placeholder,
+        .quiz-textarea.error::placeholder {
+            color: white !important;
+            font-weight: 500;
+        }
+        
         .quiz-select option {
             background: #0A0A0A;
             color: white;
@@ -4622,12 +4637,11 @@
         }
         
         .success-icon {
-            width: clamp(60px, 15vw, 80px);
-            height: clamp(60px, 15vw, 80px);
-            margin: 0 auto 2rem;
+            width: clamp(40px, 8vw, 56px);
+            height: clamp(40px, 8vw, 56px);
+            margin: 0 auto 1.2rem;
             position: relative;
         }
-        
         .success-checkmark {
             width: 100%;
             height: 100%;
@@ -4670,17 +4684,11 @@
         }
         
         .success-title {
-            font-size: clamp(2rem, 4vw, 2.5rem);
-            font-weight: 900;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
             color: white;
-            margin-bottom: 1rem;
-        }
-        
-        .success-text {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: clamp(1rem, 2vw, 1.125rem);
-            margin-bottom: 1rem;
-            line-height: 1.6;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
         }
         
         .success-note {
@@ -5104,6 +5112,34 @@
                 transform: translateY(0);
             }
         }
+        
+        /* Quiz error messages inside modal */
+        .quiz-error {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #ff4757;
+            font-size: 0.9rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .quiz-error.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .quiz-error.success {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.3);
+            color: var(--accent-green);
+        }
     </style>
 </head>
 <body>
@@ -5251,6 +5287,7 @@
                 <a href="#contact" class="hero-btn hero-btn-primary">I'm Ready To Talk →</a>
                 <a href="#video-reels" class="hero-btn hero-btn-secondary">Show Me Some Proof First →</a>
             </div>
+
 
             <div class="line-bg"></div>  <!-- Full width black line -->
 
@@ -5711,8 +5748,7 @@
             <h2>Ready to Scale Your Brand?</h2>
             <p>Stop burning cash on creatives that don't convert.</p>
             <div style="display: flex; gap: 1rem; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 2rem;">
-                <button class="cta-button" onclick="openQuiz()">LET'S TALK</button>
-                <button class="cta-button" onclick="openDirectBooking()" style="background: transparent; border: 2px solid var(--accent-green); color: var(--accent-green);">Book Direct Call</button>
+                <button class="cta-button" onclick="openQuiz()" style="background: transparent; border: 2px solid var(--accent-green); color: var(--accent-green);">Book Meeting</button>
             </div>
         </div>
     </section>
@@ -5828,7 +5864,7 @@
                             <input type="email" name="email" class="quiz-input" placeholder="Email Address">
                         </div>
                         <div class="quiz-nav">
-                            <button type="submit" class="quiz-btn quiz-btn-submit">Get My Growth Strategy</button>
+                            <button type="button" class="quiz-btn quiz-btn-submit">Get My Growth Strategy</button>
                         </div>
                     </div>
                     
@@ -5843,42 +5879,23 @@
                     </div>
                 </form>
                 
-                <!-- Success State -->
                 <div class="quiz-success with-calendly" id="quizSuccess">
                     <div class="success-section">
                         <div class="success-icon">
                             <div class="success-checkmark"></div>
                         </div>
                         <h3 class="success-title">Amazing! Let's Schedule Your Strategy Call</h3>
-                        <p class="success-text">
-                            Your responses have been captured. Now let's book a 30-minute strategy call to discuss your personalized growth plan.
-                        </p>
                     </div>
                     
                     <!-- Calendly Booking Section -->
-                    <div class="booking-header">
-                        <h4 class="booking-title">Book Your Free Strategy Call</h4>
-                        <p class="booking-subtitle">
-                            Choose a time that works best for you. We'll dive deep into your brand, audience, and create a custom growth strategy.
-                        </p>
-                    </div>
                     
                     <div class="calendly-container">
-                        <!-- Calendly inline widget begin -->
-                        <div class="calendly-inline-widget" 
+                        <div class="calendly-inline-widget"
                              data-url="https://calendly.com/jeremiah-harcharran-qrd_/30min"
                              data-auto-resize="false"></div>
-                        <!-- Calendly inline widget end -->
-                    </div>
-                    
-                    <!-- Booking Confirmation (hidden by default, shown after booking) -->
+                    </div>                    
                     <div class="booking-confirmation" id="bookingConfirmation" style="display: none;">
                         <h4>Meeting Scheduled Successfully!</h4>
-                        <p>Perfect! I've received your booking confirmation. You'll receive a calendar invite shortly with all the meeting details. I'm excited to discuss your growth strategy!</p>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 2rem;">
-                        <button class="quiz-btn quiz-btn-submit" onclick="closeQuiz()" style="margin-top: 1rem;">Close</button>
                     </div>
                 </div>
             </div>
@@ -5917,8 +5934,11 @@
             // Initialize smooth scrolling
             initSmoothScroll();
             
-            // Initialize custom cursor
+            // Initialize custom cursor - DISABLED
             initCustomCursor();
+            
+            // Fix mouse events to ensure normal interaction
+            fixMouseEvents();
             
             // Initialize mobile menu
             initMobileMenu();
@@ -6001,20 +6021,216 @@
         let currentStep = 1;
         const totalSteps = 6;
 
+        // GLOBAL ESC KEY HANDLER - Set up before any modal operations
+        (function setupGlobalEscHandler() {
+            let isModalOpen = false;
+            
+            // Override at the window level - highest priority
+            const globalEscHandler = function(e) {
+                if (e.keyCode === 27 || e.key === 'Escape') {
+                    const modal = document.getElementById('quizModal');
+                    if (modal && modal.classList.contains('active')) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        e.stopPropagation();
+                        closeQuiz();
+                        return false;
+                    }
+                }
+            };
+            
+            // Set up global listeners immediately
+            document.addEventListener('keydown', globalEscHandler, true);
+            window.addEventListener('keydown', globalEscHandler, true);
+            
+            // Also override window.onkeydown globally
+            const originalWindowKeydown = window.onkeydown;
+            window.onkeydown = function(e) {
+                if (e.keyCode === 27 || e.key === 'Escape') {
+                    const modal = document.getElementById('quizModal');
+                    if (modal && modal.classList.contains('active')) {
+                        e.preventDefault();
+                        closeQuiz();
+                        return false;
+                    }
+                }
+                if (originalWindowKeydown) {
+                    return originalWindowKeydown.call(this, e);
+                }
+            };
+        })();
+
         function openQuiz() {
-            // NUCLEAR WISTIA SHUTDOWN
-            document.querySelectorAll('wistia-player, [class*="wistia"]').forEach(el => {
-                el.style.pointerEvents = 'none';
-                el.style.visibility = 'hidden';
-                el.style.zIndex = '1';
+            // COMPLETE WISTIA NUCLEAR SHUTDOWN
+            
+            // 1. Hide all Wistia players completely
+            document.querySelectorAll('wistia-player').forEach(player => {
+                player.style.cssText = `
+                    display: none !important;
+                    visibility: hidden !important;
+                    pointer-events: none !important;
+                    z-index: -1 !important;
+                    opacity: 0 !important;
+                `;
             });
             
-            // Force modal display
+            // 2. Disable all Wistia-related elements
+            document.querySelectorAll('[class*="wistia"], [id*="wistia"]').forEach(el => {
+                el.style.cssText = `
+                    display: none !important;
+                    visibility: hidden !important;
+                    pointer-events: none !important;
+                    z-index: -1 !important;
+                `;
+            });
+            
+            // 3. Block Wistia scripts from interfering
+            if (window.Wistia) {
+                window.Wistia._disabled = true;
+                // Disable all Wistia event handlers
+                if (window.Wistia.api) {
+                    window.Wistia.api._disabled = true;
+                }
+                // NUCLEAR: Disable Wistia keyboard handlers
+                if (window.Wistia.keyboardHandlers) {
+                    window.Wistia.keyboardHandlers = [];
+                }
+            }
+            
+            // NUCLEAR: Remove all existing keydown listeners from body and document
+            const originalAddEventListener = document.addEventListener;
+            const wistiaKeyHandlers = [];
+            document.addEventListener = function(type, listener, options) {
+                if (type === 'keydown' && listener.toString().includes('wistia')) {
+                    // Block Wistia keydown handlers
+                    wistiaKeyHandlers.push({listener, options});
+                    return;
+                }
+                originalAddEventListener.call(this, type, listener, options);
+            };
+            
+            // NUCLEAR: Remove all Wistia event listeners
+            document.querySelectorAll('wistia-player').forEach(player => {
+                const newPlayer = player.cloneNode(true);
+                player.parentNode?.replaceChild(newPlayer, player);
+            });
+            
+            // 4. RESTORE NORMAL CURSOR (don't disable it completely)
+            // Just ensure modal has normal cursor behavior
             const modal = document.getElementById('quizModal');
+            if (modal) {
+                modal.style.cursor = 'auto';
+            }
+            
+            // 5. Force modal display with MAXIMUM priority
             modal.classList.add('active');
-            modal.style.zIndex = '999999';
-            modal.style.position = 'fixed';
+            modal.style.cssText = `
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                display: flex !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                z-index: 999999 !important;
+                background: rgba(0, 0, 0, 1) !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            `;
+            
             document.body.style.overflow = 'hidden';
+            
+            // 6. Create reliable close button AFTER Wistia shutdown
+            setTimeout(() => {
+                createReliableCloseButton();
+            }, 100);
+            
+            // 7. NUCLEAR ANTI-WISTIA: Create invisible click overlay
+            const overlay = document.createElement('div');
+            overlay.id = 'modal-overlay-shield';
+            overlay.style.cssText = `
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                z-index: 999998 !important;
+                background: transparent !important;
+                pointer-events: all !important;
+            `;
+            document.body.appendChild(overlay);
+            
+            // Primary overlay click handler (bypasses ALL Wistia)
+            overlay.addEventListener('click', function(e) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                
+                const quizContainer = document.getElementById('quiz-container');
+                if (quizContainer && !quizContainer.contains(e.target)) {
+                    closeQuiz();
+                }
+            }, true);
+            
+            // NUCLEAR: Attach ESC handler directly to overlay (bypasses Wistia DOM interference)
+            overlay.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' || e.keyCode === 27) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    closeQuiz();
+                }
+            }, true);
+            
+            // Make overlay focusable so it can receive keyboard events
+            overlay.tabIndex = -1;
+            overlay.focus();
+            
+            // 8. Backup: Modal container click handler
+            modal.onclick = function(e) {
+                // Stop all Wistia event propagation
+                e.stopImmediatePropagation();
+                
+                // Close if clicking on the modal backdrop (not on the quiz container)
+                if (e.target === modal) {
+                    closeQuiz();
+                }
+            };
+            
+            // NUCLEAR: Override all click events to bypass Wistia interference
+            const originalModalClick = modal.onclick;
+            modal.addEventListener('click', function(e) {
+                e.stopImmediatePropagation();
+                if (e.target === modal) {
+                    closeQuiz();
+                }
+            }, true);
+            
+            // ESC key is handled by global handler - no need for complex setup here
+            
+            // WISTIA OVERRIDE: Block all Wistia click events
+            document.addEventListener('click', function(e) {
+                const modal = document.getElementById('quizModal');
+                if (modal && modal.classList.contains('active')) {
+                    // If it's a Wistia element trying to interfere, stop it
+                    if (e.target.closest('wistia-player') || 
+                        e.target.className?.includes('wistia') ||
+                        e.target.id?.includes('wistia')) {
+                        e.stopImmediatePropagation();
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    // If clicking outside quiz container, close modal
+                    const quizContainer = document.querySelector('.quiz-container');
+                    if (quizContainer && !quizContainer.contains(e.target) && e.target === modal) {
+                        closeQuiz();
+                    }
+                }
+            }, true);
+            
+            // NUCLEAR SETUP: Ensure close buttons work immediately
+            setTimeout(() => setupContinueButtons(), 100);
             
             // Reset and show first step using CSS classes
             currentStep = 1;
@@ -6048,71 +6264,202 @@
             // Setup buttons immediately
             setupContinueButtons();
             initQuizEventListeners();
+            
+            // Ensure submit button gets nuclear treatment with slight delay
+            setTimeout(() => setupContinueButtons(), 500);
         }
         
-        // Function to open Calendly directly without quiz
-        function openDirectBooking() {
-            // Open Calendly popup directly
-            if (typeof Calendly !== 'undefined') {
-                Calendly.initPopupWidget({
-                    url: 'https://calendly.com/jeremiah-harcharran-qrd_/30min',
-                    utm: {
-                        utmSource: 'website-direct',
-                        utmMedium: 'popup-widget',
-                        utmCampaign: 'strategy-call-direct'
-                    }
-                });
-            } else {
-                // Fallback: open Calendly in new tab if widget not loaded
-                window.open('https://calendly.com/jeremiah-harcharran-qrd_/30min', '_blank');
-            }
-        }
 
+        // PROPER MODAL CLOSE - Hide instead of remove
         function closeQuiz() {
             const modal = document.getElementById('quizModal');
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-            
-            // Re-enable Wistia events and visibility
-            const wistiaPlayers = document.querySelectorAll('wistia-player');
-            wistiaPlayers.forEach(player => {
-                player.style.pointerEvents = 'auto';
-                player.style.visibility = 'visible';
-            });
-            
-            // Re-enable Wistia events
-            wistiaQuizCompatibility.enableWistiaEvents();
-            
-            // Reset quiz after modal closes
-            setTimeout(() => {
-                // Reset quiz state
-                currentStep = 1;
-                showStep(1);
-                document.getElementById('quizForm').reset();
-                document.getElementById('quizSuccess').classList.remove('active');
-                document.querySelector('.quiz-body form').style.display = 'block';
+            if (modal) {
+                // Remove active class
+                modal.classList.remove('active');
                 
-                // Reset Calendly widget area
-                const calendlyContainer = document.querySelector('.calendly-container');
-                const bookingHeader = document.querySelector('.booking-header');
-                const bookingConfirmation = document.getElementById('bookingConfirmation');
+                // Force hide with more direct CSS approach
+                modal.style.display = 'none';
+                modal.style.opacity = '0';
+                modal.style.visibility = 'hidden';
+                modal.style.pointerEvents = 'none';
                 
-                if (calendlyContainer) calendlyContainer.style.display = 'block';
-                if (bookingHeader) bookingHeader.style.display = 'block';
-                if (bookingConfirmation) bookingConfirmation.style.display = 'none';
-                
-                // Clear Calendly widget content for next time
-                const calendlyWidget = document.querySelector('.calendly-inline-widget');
-                if (calendlyWidget) {
-                    calendlyWidget.innerHTML = '';
+                // NUCLEAR: Remove the overlay shield
+                const overlay = document.getElementById('modal-overlay-shield');
+                if (overlay) {
+                    overlay.remove();
                 }
                 
-                // Reset range values
-                document.getElementById('adSpendValue').textContent = '$10,000';
-                document.getElementById('ctrValue').textContent = '2%';
-                document.getElementById('conversionValue').textContent = '3%';
-            }, 300);
+                // Restore original addEventListener
+                if (window.originalAddEventListener) {
+                    document.addEventListener = window.originalAddEventListener;
+                }
+                
+                // Re-enable Wistia players
+                document.querySelectorAll('wistia-player, [class*="wistia"]').forEach(el => {
+                    el.style.pointerEvents = 'auto';
+                    el.style.visibility = 'visible';
+                    el.style.zIndex = 'auto';
+                });
+            }
+            
+            // Reset body completely
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.pointerEvents = '';
+            document.documentElement.style.overflow = '';
+            document.documentElement.style.pointerEvents = '';
+            
+            // Restore custom cursor functionality if it exists
+            const cursor = document.getElementById('cursor');
+            if (cursor) {
+                cursor.style.display = '';
+                cursor.style.visibility = '';
+            }
         }
+        
+        // ADD this function to create a reliable close button
+        function createReliableCloseButton() {
+            
+            // AGGRESSIVE: Remove ALL close buttons first
+            document.querySelectorAll('.quiz-close').forEach(btn => {
+                btn.remove();
+            });
+            
+            // Create new button with MAXIMUM priority styling
+            const closeButton = document.createElement('button');
+            closeButton.type = 'button';
+            closeButton.className = 'quiz-close';
+            closeButton.innerHTML = '×';
+            closeButton.id = 'superCloseBtn'; // Give it an ID for easier targeting
+            
+            // Minimal CSS overrides - let the stylesheet handle most styling
+            closeButton.style.cssText = `
+                z-index: 9999999 !important;
+                pointer-events: auto !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                display: flex !important;
+            `;
+            
+            // MULTIPLE event handlers to bypass Wistia interference
+            closeButton.onclick = function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                closeQuiz();
+                return false;
+            };
+            
+            closeButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                closeQuiz();
+            }, true);
+            
+            closeButton.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                closeQuiz();
+            }, true);
+            
+            // Add to quiz container with force
+            const quizContainer = document.querySelector('.quiz-container');
+            if (quizContainer) {
+                quizContainer.appendChild(closeButton);
+                
+                // Force it to be visible after a tiny delay
+                setTimeout(() => {
+                    closeButton.style.display = 'flex !important';
+                    closeButton.style.visibility = 'visible !important';
+                }, 50);
+            }
+        }
+        
+        // EMERGENCY MANUAL CLOSE - For testing
+        function forceCloseModal() {
+            const modal = document.getElementById('quizModal');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.style.pointerEvents = 'none';
+                modal.style.zIndex = '-999';
+                modal.classList.remove('active');
+            }
+            
+            // Reset everything that could block mouse
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.pointerEvents = '';
+            document.documentElement.style.overflow = '';
+            document.documentElement.style.pointerEvents = '';
+        }
+        
+        // Debug function to find blocking elements
+        function findBlockingElements() {
+            const allElements = document.querySelectorAll('*');
+            const blocking = [];
+            
+            allElements.forEach(el => {
+                const style = window.getComputedStyle(el);
+                const zIndex = parseInt(style.zIndex);
+                if (zIndex > 1000 || style.pointerEvents === 'none' && el.offsetWidth > 100) {
+                    blocking.push({
+                        element: el,
+                        zIndex: zIndex,
+                        pointerEvents: style.pointerEvents,
+                        position: style.position,
+                        id: el.id,
+                        class: el.className
+                    });
+                }
+            });
+            
+            return blocking;
+        }
+        
+        // NUCLEAR RESET - Fix all mouse issues
+        function fixMouseEvents() {
+            // DISABLE CUSTOM CURSOR - This is likely causing the hard mouse feeling
+            const cursor = document.getElementById('cursor');
+            if (cursor) {
+                cursor.style.display = 'none';
+                cursor.remove();
+            }
+            
+            // Remove any elements that might be blocking
+            const modal = document.getElementById('quizModal');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.style.pointerEvents = 'none';
+                modal.classList.remove('active');
+            }
+            
+            // Reset all body and html styles
+            document.body.style = '';
+            document.documentElement.style = '';
+            
+            // Re-enable pointer events on everything
+            document.body.style.pointerEvents = 'auto';
+            document.documentElement.style.pointerEvents = 'auto';
+            document.body.style.cursor = 'auto';
+            
+            // Check for any invisible overlays
+            document.querySelectorAll('*').forEach(el => {
+                const style = window.getComputedStyle(el);
+                if (style.zIndex > 9999 && style.position === 'fixed') {
+                    el.style.display = 'none';
+                }
+            });
+        }
+        
+        // Make functions globally available
+        window.forceCloseModal = forceCloseModal;
+        window.findBlockingElements = findBlockingElements;
+        window.fixMouseEvents = fixMouseEvents;
+        window.closeQuiz = closeQuiz;  // Make sure closeQuiz is globally available
+        
+        // TEST FUNCTION - Remove after testing
+        window.testCloseButton = function() {
+            closeQuiz();
+        };
 
         function showStep(stepNumber) {
             // Hide all steps
@@ -6136,11 +6483,180 @@
             });
             
             updateProgressBar();
+            
+            // Ensure buttons are properly set up with nuclear replacement
+            setupContinueButtons();
         }
 
         function nextQuizStep() {
-            // Immediate fallback - call force advance
-            forceQuizAdvance();
+            // Check if current step is valid before advancing
+            if (isCurrentStepValid()) {
+                forceQuizAdvance();
+            }
+        }
+        
+        // Simple validation function with custom messages
+        function isCurrentStepValid() {
+            const currentStepElement = document.querySelector(`[data-step="${currentStep}"]`);
+            
+            // Step 1: Platform selection (radio buttons)
+            if (currentStep === 1) {
+                const isValid = currentStepElement.querySelector('input[name="platform"]:checked') !== null;
+                if (!isValid) {
+                    showErrorInField(null, 'Please select an advertising platform');
+                }
+                return isValid;
+            }
+            
+            // Step 2: Niche input
+            if (currentStep === 2) {
+                const input = currentStepElement.querySelector('input[name="niche"]');
+                const isValid = input && input.value.trim() !== '';
+                if (!isValid) {
+                    showErrorInField(input, 'Please enter your niche');
+                }
+                return isValid;
+            }
+            
+            // Step 3: Website input
+            if (currentStep === 3) {
+                const input = currentStepElement.querySelector('input[name="website"]');
+                if (!input || !input.value.trim()) {
+                    showErrorInField(input, 'Please enter your website URL');
+                    return false;
+                }
+                
+                // Validate URL format and require https://
+                const websiteUrl = input.value.trim();
+                if (!websiteUrl.startsWith('https://')) {
+                    showErrorBelowField(input, 'Please enter a valid website URL (include https://)');
+                    return false;
+                }
+                
+                // Additional URL validation
+                try {
+                    new URL(websiteUrl);
+                    return true;
+                } catch {
+                    showErrorBelowField(input, 'Please enter a valid website URL (include https://)');
+                    return false;
+                }
+            }
+            
+            // Step 4 & 5: Range inputs (always valid)
+            if (currentStep === 4 || currentStep === 5) {
+                return true;
+            }
+            
+            // Step 6: Contact info
+            if (currentStep === 6) {
+                const nameInput = currentStepElement.querySelector('input[name="fullName"]');
+                const emailInput = currentStepElement.querySelector('input[name="email"]');
+                
+                if (!nameInput || !nameInput.value.trim()) {
+                    showErrorInField(nameInput, 'Please enter your full name');
+                    return false;
+                } else if (!emailInput || !emailInput.value.trim()) {
+                    showErrorInField(emailInput, 'Please enter your email address');
+                    return false;
+                }
+                return true;
+            }
+            
+            return true;
+        }
+        
+        // Show error message inside the input field
+        function showErrorInField(inputElement, errorMessage) {
+            if (inputElement) {
+                // Store original placeholder
+                if (!inputElement.dataset.originalPlaceholder) {
+                    inputElement.dataset.originalPlaceholder = inputElement.placeholder;
+                }
+                
+                // Add error styling
+                inputElement.classList.add('error');
+                
+                // Set error message as placeholder
+                inputElement.placeholder = errorMessage;
+                
+                // Focus the input
+                inputElement.focus();
+                
+                // Reset placeholder and styling when user starts typing
+                const resetError = function() {
+                    inputElement.classList.remove('error');
+                    inputElement.placeholder = inputElement.dataset.originalPlaceholder || '';
+                    inputElement.removeEventListener('input', resetError);
+                    inputElement.removeEventListener('focus', resetError);
+                };
+                
+                inputElement.addEventListener('input', resetError);
+                inputElement.addEventListener('focus', resetError);
+                
+                // Auto-reset after 4 seconds
+                setTimeout(() => {
+                    if (inputElement.classList.contains('error')) {
+                        resetError();
+                    }
+                }, 4000);
+            } else {
+                // For radio buttons or other cases, still show modal error
+                showQuizError(errorMessage);
+            }
+        }
+        
+        // Show error message below the input field (for website URL validation)
+        function showErrorBelowField(inputElement, errorMessage) {
+            if (inputElement) {
+                // Remove any existing error message for this input
+                const existingError = inputElement.parentNode.querySelector('.field-error');
+                if (existingError) {
+                    existingError.remove();
+                }
+                
+                // Add error styling to input
+                inputElement.classList.add('error');
+                
+                // Create error message element
+                const errorElement = document.createElement('div');
+                errorElement.className = 'field-error';
+                errorElement.textContent = errorMessage;
+                errorElement.style.cssText = `
+                    color: #fa0b0b;
+                    font-size: 14px;
+                    margin-top: 8px;
+                    margin-bottom: 10px;
+                    display: block;
+                `;
+                
+                // Insert error element after the input
+                inputElement.parentNode.insertBefore(errorElement, inputElement.nextSibling);
+                
+                // Focus the input
+                inputElement.focus();
+                
+                // Reset error styling and remove error message when user starts typing
+                const resetError = function() {
+                    inputElement.classList.remove('error');
+                    const errorMsg = inputElement.parentNode.querySelector('.field-error');
+                    if (errorMsg) {
+                        errorMsg.remove();
+                    }
+                    inputElement.removeEventListener('input', resetError);
+                    inputElement.removeEventListener('focus', resetError);
+                };
+                
+                inputElement.addEventListener('input', resetError);
+                inputElement.addEventListener('focus', resetError);
+                
+                // Auto-reset after 4 seconds
+                setTimeout(() => {
+                    if (inputElement.classList.contains('error')) {
+                        resetError();
+                    }
+                }, 4000);
+            }
         }
         
         // Manual advance function for testing
@@ -6162,72 +6678,114 @@
             document.getElementById('progressBar').style.width = progress + '%';
         }
 
+        // NUCLEAR: Enhanced setupContinueButtons to bypass Wistia interference
         function setupContinueButtons() {
-            // NUCLEAR OPTION: Direct DOM override
             const continueButtons = document.querySelectorAll('.quiz-btn-continue');
             
-            continueButtons.forEach((button, index) => {
-                // Remove ALL attributes and events
-                const newButton = document.createElement('button');
-                newButton.type = 'button';
-                newButton.className = 'quiz-btn quiz-btn-continue';
-                newButton.textContent = 'Continue';
-                newButton.style.cssText = button.style.cssText;
+            continueButtons.forEach((button) => {
+                // NUCLEAR: Complete button replacement with Wistia-proof functionality
+                const newButton = button.cloneNode(true);
                 
-                // Force advance function - no events, pure DOM manipulation
-                newButton.onmousedown = function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    forceQuizAdvance();
-                    return false;
-                };
+                // Apply nuclear CSS to ensure button works
+                newButton.style.cssText = `
+                    ${newButton.style.cssText}
+                    pointer-events: auto !important;
+                    z-index: 999999 !important;
+                    position: relative !important;
+                    cursor: pointer !important;
+                `;
                 
+                // MULTIPLE event handlers to bypass ALL Wistia interference
                 newButton.onclick = function(e) {
                     e.preventDefault();
-                    e.stopPropagation();
-                    forceQuizAdvance();
+                    e.stopImmediatePropagation();
+                    nextQuizStep();
                     return false;
                 };
                 
-                newButton.ontouchstart = function(e) {
+                newButton.addEventListener('click', function(e) {
                     e.preventDefault();
-                    e.stopPropagation();
-                    forceQuizAdvance();
-                    return false;
-                };
+                    e.stopImmediatePropagation();
+                    nextQuizStep();
+                }, true);
                 
-                // Replace the old button
+                newButton.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    nextQuizStep();
+                }, true);
+                
+                // Touch support for mobile
+                newButton.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    nextQuizStep();
+                }, true);
+                
+                // Replace the button
                 button.parentNode.replaceChild(newButton, button);
             });
             
-            // ALSO PROTECT THE SUBMIT BUTTON - NUCLEAR APPROACH
-            const submitButton = document.querySelector('.quiz-btn-submit');
-            if (submitButton) {
-                // Ensure the submit button doesn't get overridden
-                submitButton.setAttribute('type', 'button'); // Change to button to prevent form submission
+            // NUCLEAR: Also setup submit buttons with anti-Wistia protection
+            const submitButtons = document.querySelectorAll('.quiz-btn-submit');
+            
+            submitButtons.forEach((button) => {
+                const newButton = button.cloneNode(true);
                 
-                // Add DIRECT click handler that bypasses form submission
-                const newSubmitButton = document.createElement('button');
-                newSubmitButton.type = 'button';
-                newSubmitButton.className = submitButton.className;
-                newSubmitButton.textContent = submitButton.textContent;
-                newSubmitButton.style.cssText = submitButton.style.cssText;
+                // Apply nuclear CSS
+                newButton.style.cssText = `
+                    ${newButton.style.cssText}
+                    pointer-events: auto !important;
+                    z-index: 999999 !important;
+                    position: relative !important;
+                    cursor: pointer !important;
+                `;
                 
-                // Direct submission handler
-                newSubmitButton.onclick = function(e) {
+                // Change type to button to prevent form submission
+                newButton.type = 'button';
+                
+                // MULTIPLE event handlers for submit
+                newButton.onclick = function(e) {
                     e.preventDefault();
-                    e.stopPropagation();
                     e.stopImmediatePropagation();
-                    
-                    // Call the submission logic directly instead of dispatching form event
-                    handleQuizSubmission();
-                    
+                    // Validate Step 6 before submitting
+                    if (isCurrentStepValid()) {
+                        window.handleQuizSubmission();
+                    }
                     return false;
                 };
                 
-                // Replace submit button
-                submitButton.parentNode.replaceChild(newSubmitButton, submitButton);
-            }
+                newButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    // Validate Step 6 before submitting
+                    if (isCurrentStepValid()) {
+                        window.handleQuizSubmission();
+                    }
+                }, true);
+                
+                newButton.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    // Validate Step 6 before submitting
+                    if (isCurrentStepValid()) {
+                        window.handleQuizSubmission();
+                    }
+                }, true);
+                
+                // Touch support for mobile
+                newButton.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    // Validate Step 6 before submitting
+                    if (isCurrentStepValid()) {
+                        window.handleQuizSubmission();
+                    }
+                }, true);
+                
+                // Replace the button
+                button.parentNode.replaceChild(newButton, button);
+            });
         }
         
         function forceQuizAdvance() {
@@ -6295,12 +6853,14 @@
                 radioInputs.forEach(input => {
                     input.addEventListener('change', function(e) {
                         e.stopPropagation();
-                        setTimeout(() => {
-                            if (currentStep < totalSteps) {
-                                currentStep++;
-                                showStep(currentStep);
-                            }
-                        }, 1000);
+                        // Only auto-advance for Step 1 (platform selection) after validation
+                        if (currentStep === 1) {
+                            setTimeout(() => {
+                                if (isCurrentStepValid()) {
+                                    forceQuizAdvance();
+                                }
+                            }, 1000);
+                        }
                     }, { capture: true });
                 });
             });
@@ -6322,6 +6882,189 @@
                     }
                 }, { capture: true });
             });
+        }
+
+        // GLOBAL QUIZ SUBMISSION FUNCTION - Accessible everywhere
+        window.handleQuizSubmission = async function() {
+            
+            const form = document.getElementById('quizForm');
+            
+            // Disable all Wistia interference immediately
+            document.querySelectorAll('wistia-player, [class*="wistia"]').forEach(el => {
+                el.style.pointerEvents = 'none';
+                el.style.zIndex = '1';
+                el.style.visibility = 'hidden';
+            });
+            
+            // Force prevent any navigation
+            window.onbeforeunload = function(e) {
+                e.preventDefault();
+                return "Quiz submission in progress...";
+            };
+            
+            // Custom validation for all required fields
+            const requiredFields = [
+                { name: 'platform', message: 'Please select an advertising platform' },
+                { name: 'niche', message: 'Please enter your niche' },
+                { name: 'website', message: 'Please enter your website URL' },
+                { name: 'adSpend', message: 'Please select your ad spend' },
+                { name: 'ctr', message: 'Please set your CTR' },
+                { name: 'conversionRate', message: 'Please set your conversion rate' },
+                { name: 'fullName', message: 'Please enter your full name' },
+                { name: 'email', message: 'Please enter your email address' }
+            ];
+            
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Validate all required fields
+            for (const field of requiredFields) {
+                if (!data[field.name] || data[field.name].trim() === '') {
+                    showQuizError(field.message);
+                    return; 
+                }
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(data.email)) {
+                showQuizError('Please enter a valid email address');
+                return;
+            }
+            
+            // Validate website URL format
+            try {
+                new URL(data.website);
+            } catch {
+                showErrorBelowField(input, 'Please enter a valid website URL (include https://)');
+                return;
+            }
+            
+            // Show loading state
+            const submitButton = document.querySelector('.quiz-btn-submit') || document.querySelector('button[type="button"].quiz-btn-submit');
+            const originalText = submitButton ? submitButton.textContent : 'Get My Growth Strategy';
+            if (submitButton) {
+                submitButton.textContent = 'Saving to Google Sheets...';
+                submitButton.classList.add('loading');
+                submitButton.disabled = true;
+            }
+            
+            // Add timestamp and calculated metrics
+            data.timestamp = new Date().toISOString();
+            data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            data.userAgent = navigator.userAgent;
+            data.referrer = document.referrer || 'Direct';
+            
+            try {
+                // Submit to Google Sheets
+                const sheetResponse = await submitToGoogleSheets(data);
+                
+                if (sheetResponse.success) {
+                    
+                    // Hide quiz header and progress bar immediately
+                    const quizHeader = document.querySelector('.quiz-header');
+                    const quizProgress = document.querySelector('.quiz-progress');
+                    if (quizHeader) quizHeader.style.display = 'none';
+                    if (quizProgress) quizProgress.style.display = 'none';
+                    
+                    // Show success state with Calendly
+                    form.style.display = 'none';
+                    document.getElementById('quizSuccess').classList.add('active');
+                    
+                    // Initialize Calendly widget after successful sheet submission
+                    setTimeout(() => {
+                        if (typeof Calendly !== 'undefined') {
+                            Calendly.initInlineWidget({
+                                url: 'https://calendly.com/jeremiah-harcharran-qrd_/30min',
+                                parentElement: document.querySelector('.calendly-inline-widget'),
+                                prefill: {
+                                    name: data.fullName || '',
+                                    email: data.email || ''
+                                },
+                                utm: {
+                                    utmSource: 'website-quiz',
+                                    utmMedium: 'inline-widget',
+                                    utmCampaign: 'strategy-call',
+                                    utmContent: `platform-${data.platform?.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}`
+                                }
+                            });
+                        }
+                    }, 500);
+                    
+                    // Track conversion event
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'quiz_completed', {
+                            'event_category': 'engagement',
+                            'event_label': data.platform,
+                            'value': parseInt(data.adSpend) || 0
+                        });
+                    }
+                    
+                    // Clear navigation protection
+                    window.onbeforeunload = null;
+                    
+                } else {
+                    throw new Error(sheetResponse.error || 'Failed to submit data');
+                }
+                
+            } catch (error) {
+                // Clear navigation protection
+                window.onbeforeunload = null;
+                
+                // Reset button state
+                if (submitButton) {
+                    submitButton.textContent = originalText;
+                    submitButton.classList.remove('loading');
+                    submitButton.disabled = false;
+                }
+                
+                // Check for CORS error and provide specific guidance
+                let errorMessage = error.message || 'Unknown error occurred';
+                if (error.message && (error.message.includes('CORS') || error.message.includes('blocked by CORS policy'))) {
+                    errorMessage = 'Google Apps Script CORS issue detected. Please update your script code (see console for details).';
+                }
+                
+                // Show detailed error message
+                showQuizError(`Submission failed: ${errorMessage}`);
+                
+                // Still show the success state as fallback (but notify about data issue)
+                setTimeout(() => {
+                    // Hide quiz header and progress bar immediately
+                    const quizHeader = document.querySelector('.quiz-header');
+                    const quizProgress = document.querySelector('.quiz-progress');
+                    if (quizHeader) quizHeader.style.display = 'none';
+                    if (quizProgress) quizProgress.style.display = 'none';
+                    
+                    // Show success state but with a warning
+                    form.style.display = 'none';
+                    document.getElementById('quizSuccess').classList.add('active');
+                    
+                    // Show warning in success state
+                    const successTitle = document.querySelector('#quizSuccess .success-title');
+                    if (successTitle) {
+                        successTitle.innerHTML = 'Let\'s Schedule Your Strategy Call';
+                    }
+                    
+                    // Initialize Calendly widget as fallback
+                    setTimeout(() => {
+                        if (typeof Calendly !== 'undefined') {
+                            Calendly.initInlineWidget({
+                                url: 'https://calendly.com/jeremiah-harcharran-qrd_/30min',
+                                parentElement: document.querySelector('.calendly-inline-widget'),
+                                prefill: {
+                                    name: data.fullName || '',
+                                    email: data.email || ''
+                                },
+                                utm: {
+                                    utmSource: 'website-quiz-fallback',
+                                    utmMedium: 'inline-widget',
+                                    utmCampaign: 'strategy-call-backup'
+                                }
+                            });
+                        }
+                    }, 1000);
+                }, 3000);
+            }
         }
 
         function initQuiz() {
@@ -6377,364 +7120,56 @@
             // Initialize quiz event listeners
             initQuizEventListeners();
             
-            // Extract form submission logic into separate function
-            async function handleQuizSubmission() {
-                const form = document.getElementById('quizForm');
-                
-                // Disable all Wistia interference immediately
-                document.querySelectorAll('wistia-player, [class*="wistia"]').forEach(el => {
-                    el.style.pointerEvents = 'none';
-                    el.style.zIndex = '1';
-                    el.style.visibility = 'hidden';
-                });
-                
-                // Force prevent any navigation
-                window.onbeforeunload = function(e) {
-                    e.preventDefault();
-                    return "Quiz submission in progress...";
-                };
-                
-                // Custom validation for all required fields
-                const requiredFields = [
-                    { name: 'platform', message: 'Please select an advertising platform' },
-                    { name: 'niche', message: 'Please enter your niche' },
-                    { name: 'website', message: 'Please enter your website URL' },
-                    { name: 'adSpend', message: 'Please select your ad spend' },
-                    { name: 'ctr', message: 'Please set your CTR' },
-                    { name: 'conversionRate', message: 'Please set your conversion rate' },
-                    { name: 'fullName', message: 'Please enter your full name' },
-                    { name: 'email', message: 'Please enter your email address' }
-                ];
-                
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData);
-                
-                // Validate all required fields
-                for (const field of requiredFields) {
-                    if (!data[field.name] || data[field.name].trim() === '') {
-                        showQuizError(field.message);
-                        return; 
-                    }
-                }
-                
-                // Validate email format
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(data.email)) {
-                    showQuizError('Please enter a valid email address');
-                    return;
-                }
-                
-                // Validate website URL format
-                try {
-                    new URL(data.website);
-                } catch {
-                    showQuizError('Please enter a valid website URL (include https://)');
-                    return;
-                }
-                
-                // Show loading state
-                const submitButton = document.querySelector('.quiz-btn-submit') || document.querySelector('button[type="button"].quiz-btn-submit');
-                const originalText = submitButton ? submitButton.textContent : 'Get My Growth Strategy';
-                if (submitButton) {
-                    submitButton.textContent = 'Saving to Google Sheets...';
-                    submitButton.classList.add('loading');
-                    submitButton.disabled = true;
-                }
-                
-                // Add timestamp and calculated metrics
-                data.timestamp = new Date().toISOString();
-                data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                data.userAgent = navigator.userAgent;
-                data.referrer = document.referrer || 'Direct';
-                
-                try {
-                    // Submit to Google Sheets
-                    const sheetResponse = await submitToGoogleSheets(data);
-                    
-                    if (sheetResponse.success) {
-                        // Show success notification
-                        showQuizSuccess('Your information has been saved successfully!');
-                        
-                        // Show success state with Calendly
-                        form.style.display = 'none';
-                        document.getElementById('quizSuccess').classList.add('active');
-                        
-                        // Initialize Calendly widget after successful sheet submission
-                        setTimeout(() => {
-                            if (typeof Calendly !== 'undefined') {
-                                Calendly.initInlineWidget({
-                                    url: 'https://calendly.com/jeremiah-harcharran-qrd_/30min',
-                                    parentElement: document.querySelector('.calendly-inline-widget'),
-                                    prefill: {
-                                        name: data.fullName || '',
-                                        email: data.email || ''
-                                    },
-                                    utm: {
-                                        utmSource: 'website-quiz',
-                                        utmMedium: 'inline-widget',
-                                        utmCampaign: 'strategy-call',
-                                        utmContent: `platform-${data.platform?.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}`
-                                    }
-                                });
-                            }
-                        }, 500);
-                        
-                        // Track conversion event
-                        if (typeof gtag !== 'undefined') {
-                            gtag('event', 'quiz_completed', {
-                                'event_category': 'engagement',
-                                'event_label': data.platform,
-                                'value': parseInt(data.adSpend) || 0
-                            });
-                        }
-                        
-                        // Clear navigation protection
-                        window.onbeforeunload = null;
-                        
-                    } else {
-                        throw new Error(sheetResponse.error || 'Failed to submit data');
-                    }
-                    
-                } catch (error) {
-                    // Clear navigation protection
-                    window.onbeforeunload = null;
-                    
-                    // Reset button state
-                    if (submitButton) {
-                        submitButton.textContent = originalText;
-                        submitButton.classList.remove('loading');
-                        submitButton.disabled = false;
-                    }
-                    
-                    // Check for CORS error and provide specific guidance
-                    let errorMessage = error.message || 'Unknown error occurred';
-                    if (error.message && (error.message.includes('CORS') || error.message.includes('blocked by CORS policy'))) {
-                        errorMessage = 'Google Apps Script CORS issue detected. Please update your script code (see console for details).';
-                    }
-                    
-                    // Show detailed error message
-                    showQuizError(`❌ Submission failed: ${errorMessage}`);
-                    
-                    // Still show the success state as fallback (but notify about data issue)
-                    setTimeout(() => {
-                        // Show success state but with a warning
-                        form.style.display = 'none';
-                        document.getElementById('quizSuccess').classList.add('active');
-                        
-                        // Show warning in success state
-                        const successTitle = document.querySelector('#quizSuccess .success-title');
-                        if (successTitle) {
-                            successTitle.innerHTML = '⚠️ Let\'s Schedule Your Strategy Call';
-                        }
-                        
-                        // Initialize Calendly widget as fallback
-                        setTimeout(() => {
-                            if (typeof Calendly !== 'undefined') {
-                                Calendly.initInlineWidget({
-                                    url: 'https://calendly.com/jeremiah-harcharran-qrd_/30min',
-                                    parentElement: document.querySelector('.calendly-inline-widget'),
-                                    prefill: {
-                                        name: data.fullName || '',
-                                        email: data.email || ''
-                                    },
-                                    utm: {
-                                        utmSource: 'website-quiz-fallback',
-                                        utmMedium: 'inline-widget',
-                                        utmCampaign: 'strategy-call-backup'
-                                    }
-                                });
-                            }
-                        }, 1000);
-                    }, 3000);
-                }
-            }
-            
             // NUCLEAR OPTION: Multiple event handlers to prevent form reload
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 e.stopPropagation();
                 
-                await handleQuizSubmission();
+                await window.handleQuizSubmission();
                 e.stopImmediatePropagation();
                 e.stopPropagation();
-                
-                // Disable all Wistia interference immediately
-                document.querySelectorAll('wistia-player, [class*="wistia"]').forEach(el => {
-                    el.style.pointerEvents = 'none';
-                    el.style.zIndex = '1';
-                    el.style.visibility = 'hidden';
-                });
-                
-                // Force prevent any navigation
-                window.onbeforeunload = function(e) {
-                    e.preventDefault();
-                    return "Quiz submission in progress...";
-                };
-                
-                // Custom validation for all required fields
-                const requiredFields = [
-                    { name: 'platform', message: 'Please select an advertising platform' },
-                    { name: 'niche', message: 'Please enter your niche' },
-                    { name: 'website', message: 'Please enter your website URL' },
-                    { name: 'adSpend', message: 'Please select your ad spend' },
-                    { name: 'ctr', message: 'Please set your CTR' },
-                    { name: 'conversionRate', message: 'Please set your conversion rate' },
-                    { name: 'fullName', message: 'Please enter your full name' },
-                    { name: 'email', message: 'Please enter your email address' }
-                ];
-                
-                const formData = new FormData(form);
-                const data = Object.fromEntries(formData);
-                
-                // Validate all required fields
-                for (const field of requiredFields) {
-                    if (!data[field.name] || data[field.name].trim() === '') {
-                        showQuizError(field.message);
-                        return; 
-                    }
-                }
-                
-                // Validate email format
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(data.email)) {
-                    showQuizError('Please enter a valid email address');
-                    return;
-                }
-                
-                // Validate website URL format
-                try {
-                    new URL(data.website);
-                } catch {
-                    showQuizError('Please enter a valid website URL (include https://)');
-                    return;
-                }
-                
-                
-                // Show loading state
-                const submitButton = form.querySelector('.quiz-btn-submit');
-                const originalText = submitButton.textContent;
-                submitButton.textContent = 'Saving to Google Sheets...';
-                submitButton.classList.add('loading');
-                submitButton.disabled = true;
-                
-                // Add timestamp and calculated metrics (data already collected above)
-                data.timestamp = new Date().toISOString();
-                data.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                data.userAgent = navigator.userAgent;
-                data.referrer = document.referrer || 'Direct';
-                
-                try {
-                    // Submit to Google Sheets
-                    const sheetResponse = await submitToGoogleSheets(data);
-                    
-                    if (sheetResponse.success) {
-                        // Show success notification
-                        showQuizSuccess('Your information has been saved successfully!');
-                        
-                        // Show success state with Calendly
-                        form.style.display = 'none';
-                        document.getElementById('quizSuccess').classList.add('active');
-                        
-                        // Initialize Calendly widget after successful sheet submission
-                        setTimeout(() => {
-                            if (typeof Calendly !== 'undefined') {
-                                Calendly.initInlineWidget({
-                                    url: 'https://calendly.com/jeremiah-harcharran-qrd_/30min',
-                                    parentElement: document.querySelector('.calendly-inline-widget'),
-                                    prefill: {
-                                        name: data.fullName || '',
-                                        email: data.email || ''
-                                    },
-                                    utm: {
-                                        utmSource: 'website-quiz',
-                                        utmMedium: 'inline-widget',
-                                        utmCampaign: 'strategy-call',
-                                        utmContent: `platform-${data.platform?.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}`
-                                    }
-                                });
-                            }
-                        }, 500);
-                        
-                        // Track conversion event
-                        if (typeof gtag !== 'undefined') {
-                            gtag('event', 'quiz_completed', {
-                                'event_category': 'engagement',
-                                'event_label': data.platform,
-                                'value': parseInt(data.adSpend) || 0
-                            });
-                        }
-                        
-                        // Clear navigation protection
-                        window.onbeforeunload = null;
-                        
-                    } else {
-                        throw new Error(sheetResponse.error || 'Failed to submit data');
-                    }
-                    
-                } catch (error) {
-                    // Clear navigation protection
-                    window.onbeforeunload = null;
-                    
-                    // Reset button state
-                    submitButton.textContent = originalText;
-                    submitButton.classList.remove('loading');
-                    submitButton.disabled = false;
-                    
-                    // Check for CORS error and provide specific guidance
-                    let errorMessage = error.message || 'Unknown error occurred';
-                    if (error.message && (error.message.includes('CORS') || error.message.includes('blocked by CORS policy'))) {
-                        errorMessage = 'Google Apps Script CORS issue detected. Please update your script code';
-                    }
-                    
-                    // Show detailed error message
-                    showQuizError(`❌ Submission failed: ${errorMessage}`);
-                    
-                    // Still show the success state as fallback (but notify about data issue)
-                    setTimeout(() => {
-                        
-                        // Show success state but with a warning
-                        form.style.display = 'none';
-                        document.getElementById('quizSuccess').classList.add('active');
-                        
-                        // Show warning in success state
-                        const successTitle = document.querySelector('#quizSuccess .success-title');
-                        if (successTitle) {
-                            successTitle.innerHTML = '⚠️ Let\'s Schedule Your Call<br><small style="color: #f39c12; font-size: 0.8em;">Note: Data may not have been saved - we\'ll collect details during our call</small>';
-                        }
-                        
-                        // Initialize Calendly widget as fallback
-                        setTimeout(() => {
-                            if (typeof Calendly !== 'undefined') {
-                                Calendly.initInlineWidget({
-                                    url: 'https://calendly.com/jeremiah-harcharran-qrd_/30min',
-                                    parentElement: document.querySelector('.calendly-inline-widget'),
-                                    prefill: {
-                                        name: data.fullName || '',
-                                        email: data.email || ''
-                                    },
-                                    utm: {
-                                        utmSource: 'website-quiz-fallback',
-                                        utmMedium: 'inline-widget',
-                                        utmCampaign: 'strategy-call-error-fallback'
-                                    }
-                                });
-                            } else {
-                                console.error('Calendly not loaded, redirecting to direct booking page');
-                                // Fallback: open Calendly in new tab
-                                setTimeout(() => {
-                                    window.open('https://calendly.com/jeremiah-harcharran-qrd_/30min', '_blank');
-                                }, 2000);
-                            }
-                        }, 500);
-                    }, 3000);
+                return false;
+            });
+            
+            // FIXED CLICK OUTSIDE - Use the modal's own click area  
+            document.getElementById('quizModal').addEventListener('click', (e) => {
+                // If clicking directly on the modal background (not the content)
+                if (e.target.id === 'quizModal' || e.target === e.currentTarget) {
+                    closeQuiz();
                 }
             });
             
-            // Close modal when clicking outside
+            // BACKUP: If modal background click doesn't work, use document click
+            let modalCloseTimeout;
+            document.addEventListener('click', (e) => {
+                // Clear any pending close actions
+                clearTimeout(modalCloseTimeout);
+                
+                const modal = document.getElementById('quizModal');
+                if (modal && modal.style.display !== 'none' && modal.classList.contains('active')) {
+                    // Check if click is outside quiz container  
+                    if (!e.target.closest('.quiz-container')) {
+                        // Delay slightly to avoid conflicts with modal background handler
+                        modalCloseTimeout = setTimeout(() => closeQuiz(), 50);
+                    }
+                }
+            });
+            
+            // Backup: Original click outside handler for modal background
             document.getElementById('quizModal').addEventListener('click', (e) => {
                 if (e.target === e.currentTarget) {
                     closeQuiz();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    const modal = document.getElementById('quizModal');
+                    if (modal && modal.classList.contains('active')) {
+                        closeQuiz();
+                    }
                 }
             });
             
@@ -6755,10 +7190,8 @@
                         handleBookingScheduled(eventData.payload);
                         break;
                     case 'calendly.profile_page_viewed':
-                        console.log('Calendly profile viewed');
                         break;
                     case 'calendly.date_and_time_selected':
-                        console.log('Date and time selected');
                         break;
                     default:
                         break;
@@ -6768,7 +7201,6 @@
         
         // Handle successful booking
         function handleBookingScheduled(payload) {
-            console.log('Meeting scheduled:', payload);
             
             // Hide Calendly widget
             const calendlyContainer = document.querySelector('.calendly-container');
@@ -6803,7 +7235,7 @@
                     body: JSON.stringify(bookingData)
                 });
             } catch (error) {
-                console.error('Error sending booking confirmation:', error);
+                
             }
         }
         
@@ -6812,7 +7244,6 @@
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwTVirCnPW3HWTgyoKNjiajjM__A7sBlmWZn04bP1_OW6p5hKKoV13OqhCZsGOi7V8/exec';
         
         async function submitToGoogleSheets(quizData) {
-            console.log('Starting Google Sheets submission with data:', quizData);
             
             try {
                 // Format data for Google Sheets
@@ -6831,9 +7262,6 @@
                     userAgent: quizData.userAgent || ''
                 };
                 
-                console.log('Formatted sheet data:', sheetData);
-                console.log('Sending to URL:', GOOGLE_SCRIPT_URL);
-                
                 // Send to Google Sheets using FormData to avoid CORS preflight
                 const formData = new FormData();
                 formData.append('data', JSON.stringify(sheetData));
@@ -6843,43 +7271,30 @@
                     body: formData
                 });
                 
-                console.log('Response status:', response.status);
-                console.log('Response OK:', response.ok);
-                
                 if (!response.ok) {
-                    console.error('HTTP error response:', response.status, response.statusText);
                     throw new Error(`HTTP error! status: ${response.status} - ${response.statusText}`);
                 }
                 
                 const responseText = await response.text();
-                console.log('Raw response text:', responseText);
                 
                 let result;
                 try {
                     result = JSON.parse(responseText);
                 } catch (parseError) {
-                    console.error('Failed to parse response as JSON:', parseError);
-                    console.log('Response was not valid JSON, treating as error');
                     throw new Error(`Invalid response format: ${responseText.substring(0, 100)}`);
                 }
                 
-                console.log('Parsed response:', result);
-                
                 if (result.status === 'success') {
-                    console.log('Google Sheets submission successful!');
                     return { success: true, data: result };
                 } else {
-                    console.error('Google Sheets returned error:', result);
                     throw new Error(result.message || 'Unknown error from Google Sheets');
                 }
                 
             } catch (error) {
-                console.error('Google Sheets submission error:', error);
                 
                 // Check if it's a CORS error
                 if (error.message.includes('CORS') || error.message.includes('blocked by CORS policy')) {
-                    console.error('🚨 CORS ERROR: Your Google Apps Script needs to be updated!');
-                    console.log('📖 Solution: Check the QUIZ-DEBUG-GUIDE.md file for the updated Google Apps Script code');
+                    // CORS error detected, but no need to log detailed messages
                 }
                 
                 // Fallback: Store locally and retry later
@@ -6903,9 +7318,8 @@
                     retryCount: 0
                 });
                 localStorage.setItem('pendingQuizSubmissions', JSON.stringify(stored));
-                console.log('Quiz data stored locally for retry');
             } catch (error) {
-                console.error('Failed to store quiz data locally:', error);
+                // Error handling without logging
             }
         }
         
@@ -6929,13 +7343,12 @@
                     }
                 });
             } catch (error) {
-                console.error('Error retrying pending submissions:', error);
+                // Error handling without logging
             }
         }
         
         // Test function for Google Sheets integration
         async function testGoogleSheetsConnection() {
-            console.log('Testing Google Sheets connection...');
             
             const testData = {
                 timestamp: new Date().toISOString(),
@@ -6954,12 +7367,10 @@
             
             try {
                 const result = await submitToGoogleSheets(testData);
-                console.log('Test successful:', result);
-                showQuizNotification('✅ Google Sheets connection test successful!', 'success');
+                showQuizNotification('Google Sheets connection test successful!', 'success');
                 return result;
             } catch (error) {
-                console.error('Test failed:', error);
-                showQuizNotification(`❌ Google Sheets test failed: ${error.message}`, 'error');
+                showQuizNotification(`Google Sheets test failed: ${error.message}`, 'error');
                 return { success: false, error: error.message };
             }
         }
@@ -6967,11 +7378,64 @@
         // Add test button to console for debugging
         if (typeof window !== 'undefined') {
             window.testGoogleSheets = testGoogleSheetsConnection;
-            console.log('🔧 Debug: Run testGoogleSheets() in console to test Google Sheets integration');
         }
         
         // Show error/success notifications
         function showQuizNotification(message, type = 'error') {
+            // Check if quiz modal is active
+            const modal = document.getElementById('quizModal');
+            const isQuizActive = modal && modal.classList.contains('active');
+            
+            if (isQuizActive) {
+                // Show error inside quiz modal
+                showQuizErrorInModal(message, type);
+            } else {
+                // Show error outside modal (for non-quiz errors)
+                showGeneralNotification(message, type);
+            }
+        }
+        
+        // Show error message inside quiz modal
+        function showQuizErrorInModal(message, type) {
+            // Remove existing quiz error
+            const existing = document.getElementById('quizError');
+            if (existing) {
+                existing.remove();
+            }
+            
+            // Create error element for inside modal
+            const errorElement = document.createElement('div');
+            errorElement.id = 'quizError';
+            errorElement.className = `quiz-error ${type}`;
+            errorElement.textContent = message;
+            
+            // Add to quiz container
+            const quizContainer = document.querySelector('.quiz-container');
+            const quizHeader = document.querySelector('.quiz-header');
+            
+            if (quizContainer && quizHeader) {
+                // Insert error after quiz header
+                quizHeader.insertAdjacentElement('afterend', errorElement);
+                
+                // Show error with animation
+                setTimeout(() => {
+                    errorElement.classList.add('show');
+                }, 100);
+                
+                // Hide after delay
+                setTimeout(() => {
+                    errorElement.classList.remove('show');
+                    setTimeout(() => {
+                        if (errorElement.parentNode) {
+                            errorElement.remove();
+                        }
+                    }, 300);
+                }, type === 'error' ? 4000 : 3000);
+            }
+        }
+        
+        // Show general notification outside modal
+        function showGeneralNotification(message, type) {
             // Remove existing notification
             const existing = document.getElementById('quizNotification');
             if (existing) {
@@ -7016,143 +7480,6 @@
             setTimeout(retryPendingSubmissions, 5000);
         });
         
-        /*
-        ===============================================
-        GOOGLE APPS SCRIPT CODE (Copy to script.google.com):
-        ===============================================
-        
-        function doPost(e) {
-          try {
-            // Get the active spreadsheet (must be bound to this script)
-            const sheet = SpreadsheetApp.getActiveSheet();
-            
-            // If no data in first row, add headers
-            if (sheet.getLastRow() === 0) {
-              const headers = [
-                'Timestamp', 'Full Name', 'Email', 'Platform', 
-                'Niche', 'Website', 'Ad Spend', 'CTR', 
-                'Conversion Rate', 'Timezone', 'Referrer', 'User Agent'
-              ];
-              sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
-              
-              // Format headers
-              sheet.getRange(1, 1, 1, headers.length)
-                   .setBackground('#4285F4')
-                   .setFontColor('white')
-                   .setFontWeight('bold');
-            }
-            
-            // Parse the incoming data
-            const data = JSON.parse(e.postData.contents);
-            
-            // Validate required fields
-            if (!data.email || !data.fullName) {
-              throw new Error('Missing required fields: email and fullName');
-            }
-            
-            // Prepare row data in the same order as headers
-            const rowData = [
-              data.timestamp || new Date().toISOString(),
-              data.fullName || '',
-              data.email || '',
-              data.platform || '',
-              data.niche || '',
-              data.website || '',
-              data.adSpend || '',
-              data.ctr || '',
-              data.conversionRate || '',
-              data.timezone || '',
-              data.referrer || '',
-              data.userAgent || ''
-            ];
-            
-            // Append to sheet
-            sheet.appendRow(rowData);
-            
-            // Auto-resize columns for better readability
-            sheet.autoResizeColumns(1, rowData.length);
-            
-            // Optional: Send email notification
-            // MailApp.sendEmail({
-            //   to: 'your-email@example.com',
-            //   subject: 'New Quiz Lead: ' + data.fullName,
-            //   body: 'New lead captured:\n\n' + 
-            //         'Name: ' + data.fullName + '\n' +
-            //         'Email: ' + data.email + '\n' +
-            //         'Platform: ' + data.platform + '\n' +
-            //         'Niche: ' + data.niche + '\n' +
-            //         'Website: ' + data.website + '\n' +
-            //         'Ad Spend: $' + data.adSpend + '\n\n' +
-            //         'View full data: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl()
-            // });
-            
-            // Return success response
-            return ContentService
-              .createTextOutput(JSON.stringify({
-                status: 'success',
-                message: 'Lead captured successfully',
-                timestamp: new Date().toISOString(),
-                rowNumber: sheet.getLastRow()
-              }))
-              .setMimeType(ContentService.MimeType.JSON);
-              
-          } catch (error) {
-            // Log error for debugging
-            console.error('Error in doPost:', error);
-            
-            // Return error response
-            return ContentService
-              .createTextOutput(JSON.stringify({
-                status: 'error',
-                message: error.toString(),
-                timestamp: new Date().toISOString()
-              }))
-              .setMimeType(ContentService.MimeType.JSON);
-          }
-        }
-        
-        // Test function for development
-        function testSubmission() {
-          const testData = {
-            timestamp: new Date().toISOString(),
-            fullName: 'John Doe',
-            email: 'john@example.com',
-            platform: 'Facebook/Instagram',
-            niche: 'E-commerce',
-            website: 'https://example.com',
-            adSpend: '15000',
-            ctr: '2.8',
-            conversionRate: '4.2',
-            timezone: 'America/New_York',
-            referrer: 'https://google.com',
-            userAgent: 'Mozilla/5.0...'
-          };
-          
-          const mockEvent = {
-            postData: {
-              contents: JSON.stringify(testData)
-            }
-          };
-          
-          const result = doPost(mockEvent);
-          Logger.log(result.getContent());
-          return result.getContent();
-        }
-        
-        // Function to set up triggers (optional)
-        function setupTriggers() {
-          // Delete existing triggers
-          const triggers = ScriptApp.getProjectTriggers();
-          triggers.forEach(trigger => ScriptApp.deleteTrigger(trigger));
-          
-          // Add any recurring triggers if needed
-          // ScriptApp.newTrigger('someFunction').timeBased().everyHours(1).create();
-        }
-        
-        ===============================================
-        END OF GOOGLE APPS SCRIPT CODE
-        ===============================================
-        */
 
         // Create particle system
         function createParticles() {
@@ -7169,8 +7496,10 @@
             }
         }
 
-        // Custom cursor - Only for desktop
+        // Custom cursor - DISABLED to fix mouse interaction issues
         function initCustomCursor() {
+            return; // Exit early - cursor disabled to fix mouse issues
+            
             // Check if device supports hover
             if (window.matchMedia('(hover: hover)').matches && window.matchMedia('(pointer: fine)').matches) {
                 const cursor = document.getElementById('cursor');
@@ -7567,7 +7896,7 @@
                             
                             // Auto-play on desktop, pause on mobile to save battery
                             if (!isMobile) {
-                                video.play().catch(e => console.log('Auto-play prevented:', e));
+                                video.play().catch(e => {/* Auto-play prevented */});
                             }
                             video.classList.add('loaded');
                         } else {
@@ -7622,7 +7951,6 @@
                 
                 // Handle video errors gracefully
                 video.addEventListener('error', (e) => {
-                    console.error('Video loading error:', e);
                     wrapper.style.background = '#111';
                 });
             });
@@ -7826,7 +8154,6 @@
                     })
                     .catch(error => {
                         // Auto-play was prevented
-                        console.log('Video autoplay prevented:', error);
                         showPlayButton(video);
                     });
             }
@@ -7857,7 +8184,6 @@
         }
 
         function handleVideoError(video) {
-            console.error('Video failed to load:', video.src);
             const wrapper = video.closest('.reel-wrapper, .portfolio-reel-wrapper');
             
             // Show fallback image if video fails
