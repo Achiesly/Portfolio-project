@@ -8,6 +8,7 @@
     <meta name="theme-color" content="#000000">
     <title>Jeremiah Harcharran - Performance Creative Architect</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <!-- Calendly Scripts -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -1224,7 +1225,7 @@
             }
             
             /* Service cards */
-            .service-card {
+            .service-cards {
                 min-height: auto;
                 padding: 1.5rem;
             }
@@ -2115,7 +2116,6 @@
         }
         
         .reel-wrapper::after {
-            content: '▶';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -2138,254 +2138,129 @@
             opacity: 0;
         }
         
-        
-/* =============================================== */
-/* REDESIGNED ABOUT ME & SERVICES SECTIONS */
-/* =============================================== */
 
-/* About Me Section - Modern Design */
+/* About Me Section - Clean Minimalist Design */
 .about-section {
-    padding: clamp(4rem, 8vw, 8rem) clamp(1rem, 4vw, 4rem);
-    background: linear-gradient(180deg, #FAFAFA 0%, #FFFFFF 100%);
+    padding: 40px;
+    background-color: #f4f4f4;
     position: relative;
-    overflow: hidden;
-}
-
-.about-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px);
-    background-size: 60px 60px;
-    animation: gridMove 25s linear infinite;
-    pointer-events: none;
-    opacity: 0.5;
 }
 
 .about-container {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
-    position: relative;
-    z-index: 2;
-}
-
-.about-header {
     text-align: center;
-    margin-bottom: clamp(3rem, 6vw, 4rem);
-    opacity: 0;
-    transform: translateY(30px);
+    margin-top: clamp(2rem, 4vw, 8rem);
 }
 
-.about-header.visible {
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+.about-intro {
+    margin-bottom: clamp(4rem, 8vw, 6rem);
 }
 
-.about-title {
-    font-size: clamp(2.5rem, 5vw + 0.5rem, 4.5rem);
-    font-weight: 900;
-    margin-bottom: 1rem;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-}
-
-.about-title .highlight {
-    background: linear-gradient(135deg, var(--accent-green) 0%, #00CC6A 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.about-subtitle {
-    font-size: clamp(1.125rem, 2vw, 1.25rem);
-    color: var(--gray-text);
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.about-card {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: clamp(2rem, 5vw, 4rem);
-    align-items: center;
-    background: white;
-    border-radius: clamp(24px, 4vw, 32px);
-    padding: clamp(2rem, 4vw, 3rem);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-    border: 1px solid rgba(0,0,0,0.05);
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0;
-    transform: translateY(40px);
-}
-
-.about-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.about-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(0,255,136,0.1) 0%, transparent 70%);
-    opacity: 0;
-    transition: all 0.6s ease;
-    pointer-events: none;
-}
-
-@media (hover: hover) {
-    .about-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 40px 100px rgba(0,255,136,0.15);
-        border-color: var(--accent-green);
-    }
-    
-    .about-card:hover::before {
-        opacity: 1;
-    }
-}
-
-.about-image-wrapper {
-    position: relative;
-}
-
-.about-image {
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 20px;
-    overflow: hidden;
-    position: relative;
-    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-}
-
-.about-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-@media (hover: hover) {
-    .about-card:hover .about-image img {
-        transform: scale(1.05);
-    }
-}
-
-.about-image::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 0%, rgba(0,255,136,0.1) 100%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-@media (hover: hover) {
-    .about-card:hover .about-image::after {
-        opacity: 1;
-    }
-}
-
-.about-content h3 {
-    font-size: clamp(1.75rem, 3vw, 2.25rem);
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-    color: var(--primary-black);
-    letter-spacing: -0.01em;
-    position: relative;
-}
-
-.about-content h3::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background: var(--accent-green);
-    border-radius: 2px;
-    box-shadow: 0 0 10px var(--glow-green);
-}
-
-.about-content p {
-    font-size: clamp(1rem, 1.5vw, 1.125rem);
-    line-height: 1.7;
-    color: var(--gray-text);
-    margin-bottom: 2rem;
-}
-
-.social-icons {
-    display: flex;
-    gap: clamp(1rem, 2vw, 1.5rem);
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.social-icon {
+.about-greeting {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #333;
+    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: clamp(48px, 8vw, 60px);
-    height: clamp(48px, 8vw, 60px);
-    background: linear-gradient(135deg, #F8F8F8, #F0F0F0);
-    border-radius: 16px;
-    color: var(--gray-text);
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
-    border: 1px solid rgba(0,0,0,0.05);
-    position: relative;
-    overflow: hidden;
+    flex-wrap: wrap;
+    gap: clamp(1rem, 2vw, 1.5rem);
 }
 
-.social-icon::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--accent-green), #00CC6A);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+.profile-image-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.social-icon i {
-    position: relative;
-    z-index: 1;
-    transition: color 0.3s ease;
+.profile-image {
+    width: clamp(80px, 12vw, 120px);
+    height: clamp(80px, 12vw, 120px);
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
 
-@media (hover: hover) {
-    .social-icon:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 30px rgba(0,255,136,0.3);
+.about-story {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.story-section {
+    text-align: left;
+    margin-bottom: 3rem;
+}
+
+.story-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: #999;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+}
+
+.story-content {
+    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+    line-height: 1.6;
+    color: #666;
+}
+
+.story-content p {
+    margin-bottom: 1.5rem;
+}
+
+.story-highlight {
+    color: #999;
+    font-style: italic;
+}
+
+.story-bold {
+    color: #333;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .about-greeting {
+        flex-direction: column;
+        text-align: center;
     }
     
-    .social-icon:hover::before {
-        opacity: 1;
+    .story-section {
+        text-align: center;
     }
     
-    .social-icon:hover i {
-        color: white;
+    .story-content {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .about-greeting {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .story-section {
+        text-align: center;
+    }
+    
+    .story-content {
+        font-size: clamp(1rem, 2vw, 1.2rem);
     }
 }
 
 /* Services Section - Modern Design */
 .services-section {
-    padding: clamp(4rem, 8vw, 8rem) clamp(1rem, 4vw, 4rem);
+    padding: clamp(3rem, 6vw, 4rem) clamp(1rem, 4vw, 4rem);
     background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFA 100%);
     position: relative;
     overflow: hidden;
+    margin-top: 0rem;
 }
 
 .services-section::before {
@@ -2409,6 +2284,7 @@
     margin: 0 auto;
     position: relative;
     z-index: 2;
+    top: -40px;
 }
 
 .services-header {
@@ -2425,8 +2301,8 @@
 }
 
 .services-title {
-    font-size: clamp(2.5rem, 5vw + 0.5rem, 4.5rem);
-    font-weight: 900;
+    font-size: 2.5rem;
+    font-weight: 700;
     margin-bottom: 1rem;
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -2451,6 +2327,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: clamp(2rem, 4vw, 3rem);
+    margin-top: -2rem;
 }
 
 @media (max-width: 640px) {
@@ -2459,30 +2336,30 @@
     }
 }
 
-.service-card {
+.service-cards {
     background: white;
-    border-radius: clamp(24px, 4vw, 32px);
-    padding: 0;
     position: relative;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(0,0,0,0.05);
-    transform-style: preserve-3d;
     opacity: 0;
-    transform: translateY(40px) rotateX(-10deg);
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    height: auto;
+    min-height: 600px;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.service-card.visible {
+.service-cards.visible {
     opacity: 1;
     transform: translateY(0) rotateX(0);
 }
 
-.service-card:nth-child(1).visible { transition-delay: 0s; }
-.service-card:nth-child(2).visible { transition-delay: 0.1s; }
-.service-card:nth-child(3).visible { transition-delay: 0.2s; }
+.service-cards:nth-child(1).visible { transition-delay: 0s; }
+.service-cards:nth-child(2).visible { transition-delay: 0.1s; }
+.service-cards:nth-child(3).visible { transition-delay: 0.2s; }
 
-.service-card::before {
+.service-cards::before {
     content: '';
     position: absolute;
     top: -100%;
@@ -2495,53 +2372,13 @@
     pointer-events: none;
 }
 
-@media (hover: hover) {
-    .service-card:hover {
-        transform: translateY(-15px) scale(1.02);
-        box-shadow: 0 40px 100px rgba(0,255,136,0.2);
-        border-color: var(--accent-green);
-    }
-    
-    .service-card:hover::before {
-        opacity: 0.1;
-        top: -50%;
-        left: -50%;
-    }
-}
-
-.service-image {
-    width: 100%;
-    height: 220px;
-    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-    position: relative;
-    overflow: hidden;
-    border-radius: clamp(24px, 4vw, 32px) clamp(24px, 4vw, 32px) 0 0;
-}
-
-.service-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-@media (hover: hover) {
-    .service-card:hover .service-image img {
-        transform: scale(1.1);
-    }
-}
-
-.service-image::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.1) 100%);
-    transition: opacity 0.4s ease;
-}
 
 .service-content {
-    padding: clamp(1.5rem, 3vw, 2rem);
+    padding: 0;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .service-number {
@@ -2557,23 +2394,25 @@
 }
 
 @media (hover: hover) {
-    .service-card:hover .service-number {
+    .service-cards:hover .service-number {
         color: var(--accent-green);
         text-shadow: 0 0 20px var(--glow-green);
         transform: scale(1.1);
     }
 }
 
-.service-content h3 {
-    font-size: clamp(1.25rem, 2vw, 1.5rem);
+.service-content h3,
+.service-title {
     font-weight: 700;
-    margin-bottom: 1rem;
     color: var(--primary-black);
     letter-spacing: -0.01em;
     position: relative;
+    font-size: 20px;
+    margin-bottom: 15px;
 }
 
-.service-content h3::after {
+.service-content h3::after,
+.service-title::after {
     content: '';
     position: absolute;
     bottom: -8px;
@@ -2587,17 +2426,18 @@
 }
 
 @media (hover: hover) {
-    .service-card:hover .service-content h3::after {
+    .service-cards:hover .service-content h3::after,
+    .service-cards:hover .service-title::after {
         opacity: 1;
         width: 60px;
     }
 }
 
-.service-content p {
-    font-size: clamp(0.95rem, 1.5vw, 1rem);
-    line-height: 1.7;
-    color: var(--gray-text);
-    margin-bottom: 1.5rem;
+.service-content p,
+.service-description {
+    line-height: 1.6;
+    font-size: 16px;
+    color: #666;
 }
 
 .service-features {
@@ -2618,13 +2458,117 @@
     transition: all 0.3s ease;
 }
 
-@media (hover: hover) {
-    .service-card:hover .service-feature {
-        background: var(--accent-green);
-        color: white;
-        border-color: var(--accent-green);
+/* Carousel inside service card */
+.service-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  margin: 1.5rem 0;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.service-carousel img {
+  display: none;
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.service-carousel img.active {
+  display: block;
+}
+
+.carousel-controls {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.carousel-controls button {
+  background: rgba(0, 0, 0, 0.568);
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  backdrop-filter: blur(10px);
+}
+
+.carousel-controls button i {
+  font-size: 12px;
+  line-height: 1;
+}
+
+
+.carousel-controls button .icon-fallback {
+  display: none;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.carousel-controls button i:not(.fa-chevron-left):not(.fa-chevron-right) ~ .icon-fallback,
+.carousel-controls button:not(:has(i.fa)) .icon-fallback {
+  display: inline;
+}
+
+.carousel-controls button i.fa:before {
+  display: inline;
+}
+
+.carousel-controls button i.fa + .icon-fallback {
+  display: none;
+}
+
+.carousel-controls button .fa:before {
+  font-family: FontAwesome, Arial, sans-serif;
+}
+
+.carousel-controls button .fa-chevron-left:before {
+  content: "\f053";
+}
+
+.carousel-controls button .fa-chevron-right:before {
+  content: "\f054";
+}
+
+@media (min-width: 768px) {
+    .service-carousel img {
+        height: 380px;
     }
 }
+
+@media (max-width: 640px) {
+    .service-carousel {
+        margin: 1rem 0;
+    }
+    
+    .service-carousel img {
+        height: 260px;
+    }
+    
+    .carousel-controls button {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+}
+
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -2677,15 +2621,15 @@
 }
 
 /* Service-specific placeholder backgrounds */
-.service-card:nth-child(1) .service-image {
+.service-cards:nth-child(1) .service-image {
     background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
 }
 
-.service-card:nth-child(2) .service-image {
+.service-cards:nth-child(2) .service-image {
     background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
 }
 
-.service-card:nth-child(3) .service-image {
+.service-cards:nth-child(3) .service-image {
     background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c8 100%);
 }
         /* Optimized Journey Section */
@@ -3395,11 +3339,14 @@
         
         /* Optimized Portfolio Section */
         .portfolio {
-            padding: clamp(4rem, 8vw, 8rem) 0;
+            padding: clamp(2rem, 8vw, 8rem) 0;
             position: relative;
             overflow: hidden;
             background: linear-gradient(180deg, #FAFAFA 0%, #FFFFFF 50%, #F8F8F8 100%);
             min-height: auto;
+            margin-top: -4rem;
+
+                    
         }
         
         .portfolio::before {
@@ -3421,20 +3368,21 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 150px;
+            height: 50px;
             background: linear-gradient(to bottom, 
                 transparent 0%, 
-                rgba(255, 255, 255, 0.6) 50%, 
-                rgba(255, 255, 255, 0.95) 100%
+                rgba(255, 255, 255, 0.1) 70%, 
+                rgba(255, 255, 255, 0.3) 100%
             );
             pointer-events: none;
-            z-index: 10;
+            z-index: 1;
         }
         
         .portfolio-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 clamp(1rem, 3vw, 2rem);
+            padding: 0 clamp(1rem, 3vw, 2rem);    
+
         }
         
         .portfolio-header {
@@ -4800,6 +4748,62 @@
                 width: 100%;
             }
         }
+
+        /* Footer Social Icons - Smaller and Centered */
+        footer .social-icons {
+            display: flex !important;
+            justify-content: center !important;
+            gap: 1rem !important;
+            margin-top: 1.5rem !important;
+            align-items: center !important;
+        }
+
+        footer .social-icon {
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 0.8rem !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 8px !important;
+            color: rgba(255, 255, 255, 0.6) !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-decoration: none !important;
+            min-width: 32px !important;
+            min-height: 32px !important;
+        }
+
+        footer .social-icon i {
+            font-size: 0.8rem !important;
+            line-height: 1 !important;
+        }
+
+        footer .social-icon::before {
+            background: linear-gradient(135deg, var(--accent-green), #00CC6A) !important;
+        }
+
+        @media (hover: hover) {
+            footer .social-icon:hover {
+                transform: translateY(-2px) !important;
+                background: rgba(255, 255, 255, 0.1) !important;
+                border-color: var(--accent-green) !important;
+                color: var(--accent-green) !important;
+                box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2) !important;
+            }
+
+            footer .social-icon:hover::before {
+                opacity: 0 !important;
+            }
+        }
+
+        /* Simple Wistia Font Cleanup */
+        body > div:empty,
+        body > span:empty,
+        body > p:empty {
+            display: none !important;
+        }
         
         /* Optimized Preloader */
         .preloader {
@@ -4914,7 +4918,7 @@
         /* Print styles */
         @media print {
             .noise-overlay,
-            .cursor,
+            .custom-cursor,
             .preloader,
             .mobile-menu-toggle,
             .quiz-modal,
@@ -5143,11 +5147,6 @@
     </style>
 </head>
 <body>
-    <!-- Custom Cursor -->
-    <div class="cursor" id="cursor">
-        <div class="cursor-dot"></div>
-    </div>
-    
     <!-- Noise Overlay -->
     <div class="noise-overlay"></div>
     
@@ -5403,79 +5402,77 @@
         </div>
     </section>
     
-        <!-- My Services Section - Redesigned -->
-        <section id="services" class="services-section">
+<!-- My Services Section -->
+            <section id="services" class="services-section">
             <div class="services-container">
                 <div class="services-header">
-                    <h2 class="services-title">
-                        <span>My</span>
-                        <span class="highlight">Services</span>
-                    </h2>
-                    <p class="services-subtitle">
-                        Comprehensive creative solutions designed to drive performance, engagement, and measurable growth for your brand.
-                    </p>
+                <h2 class="services-title">
+                    <span>My</span>
+                    <span class="highlight">Services</span>
+                </h2>
                 </div>
-                
+
                 <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-video">
-                           <!-- video here -->
-                            <div class="service-number">01</div>
-                        </div>
-                        <div class="service-content">
-                            <h3>Creative Strategy & Concepts</h3>
-                            <p>
-                                Data-driven creative strategies that resonate with your target audience and drive conversions. 
-                                I develop compelling concepts that blend psychology, design, and performance marketing.
-                            </p>
-                            <div class="service-features">
-                                <span class="service-feature">Brand Positioning</span>
-                                <span class="service-feature">Creative Direction</span>
-                                <span class="service-feature">Campaign Strategy</span>
-                            </div>
+                <!-- Card 1 -->
+                <div class="service-cards">
+                    <div class="service-content">
+                    <h3 class="service-title">User Generated Content</h3>
+                    <p class="service-description">
+                        Product seeding campaigns to collect authentic content & find brand ambassadors that never stop CR8TING.
+                    </p>
+                    <div class="service-carousel">
+                        <img src="Assets/user-generated-1.jpg" alt="Service Image" class="active">
+                        <img src="Assets/user-generated-2.jpg" alt="Service Image">
+                        <img src="Assets/user-generated-3.jpg" alt="Service Image">
+                        <div class="carousel-controls">
+                        <button class="prev"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="icon-fallback">‹</span></button>
+                        <button class="next"><i class="fa fa-chevron-right" aria-hidden="true"></i><span class="icon-fallback">›</span></button>
                         </div>
                     </div>
-                    
-                    <div class="service-card">
-                        <div class="service-video">
-                            <!-- video here -->
-                            <div class="service-number">02</div>
-                        </div>
-                        <div class="service-content">
-                            <h3>Performance Ad Creative</h3>
-                            <p>
-                                High-converting ad creatives optimized for maximum ROAS across all major platforms. 
-                                Every creative is built with performance metrics and conversion optimization in mind.
-                            </p>
-                            <div class="service-features">
-                                <span class="service-feature">Video Ads</span>
-                                <span class="service-feature">Static Creatives</span>
-                                <span class="service-feature">A/B Testing</span>
-                            </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="service-cards">
+                    <div class="service-content">
+                    <h3 class="service-title">Studio Content</h3>
+                    <p class="service-description">
+                        High production content that will WOW your customers and ELEV8TE your brand.
+                    </p>
+                    <div class="service-carousel">
+                        <img src="Assets/studio-content-1.jpg" alt="Service Image" class="active">
+                        <img src="Assets/studio-content-2.jpg" alt="Service Image">
+                        <img src="Assets/studio-content-3.jpg" alt="Service Image">
+                        <div class="carousel-controls">
+                        <button class="prev"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="icon-fallback">‹</span></button>
+                        <button class="next"><i class="fa fa-chevron-right" aria-hidden="true"></i><span class="icon-fallback">›</span></button>
                         </div>
                     </div>
-                    
-                    <div class="service-card">
-                        <div class="service-video">
-                            <!-- video here -->
-                            <div class="service-number">03</div>
-                        </div>
-                        <div class="service-content">
-                            <h3>Brand & Growth Consulting</h3>
-                            <p>
-                                Strategic consulting to accelerate your brand's growth through optimized creative workflows, 
-                                performance analysis, and scalable marketing systems.
-                            </p>
-                            <div class="service-features">
-                                <span class="service-feature">Growth Strategy</span>
-                                <span class="service-feature">Performance Analysis</span>
-                                <span class="service-feature">Team Training</span>
-                            </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="service-cards">
+                    <div class="service-content">
+                    <h3 class="service-title">AI Generated Content</h3>
+                    <p class="service-description">
+                        Harnessing the power of AI, we generate hyper-realistic content that turns ordinary content into mind-blowing CR8TIVE.
+                    </p>
+                    <div class="service-carousel">
+                        <img src="Assets/ai-generated-1.jpg" alt="Service Image" class="active">
+                        <img src="Assets/ai-generated-2.jpg" alt="Service Image">
+                        <img src="Assets/ai-generated-3.jpg" alt="Service Image">
+                        <div class="carousel-controls">
+                        <button class="prev"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="icon-fallback">‹</span></button>
+                        <button class="next"><i class="fa fa-chevron-right" aria-hidden="true"></i><span class="icon-fallback">›</span></button>
                         </div>
                     </div>
+                    </div>
+                </div>
+
                 </div>
             </div>
-        </section>
+            </section>
 
 
 
@@ -5551,53 +5548,113 @@
       <!-- About Me Section - Redesigned -->
       <section id="about" class="about-section">
           <div class="about-container">
-              <div class="about-header">
-                  <h2 class="about-title">
-                      <span>Meet</span>
-                      <span class="highlight">Jeremiah</span>
-                  </h2>
-                  <p class="about-subtitle">
-                      Performance Creative Architect dedicated to transforming brands through data-driven insights and innovative strategies.
-                  </p>
+              <div class="about-intro">
+                  <h1 class="about-greeting">Hey! I'm <span class="profile-image-wrapper"><img src="Assets/profile-photo.jpg" alt="Jeremiah" class="profile-image"></span> Jeremiah.</h1>
               </div>
+             
               
-              <div class="about-card">
-                  <div class="about-image-wrapper">
-                      <div class="about-image">
-                          <img src="media/about/profile-photo.jpg" alt="Jeremiah Harcharran" />
-                      </div>
-                  </div>
-                  
-                  <div class="about-content">
-                      <h3>Creative Performance Architect</h3>
-                      <p>
-                          Hi! I'm Jeremiah, a creative performance architect with a passion for transforming brands through strategic innovation. 
-                          I specialize in leveraging data-driven insights and creative strategies to drive measurable growth. 
-                          From corporate strategy to leading cutting-edge campaigns, I thrive on helping brands reach their full potential.
-                      </p>
-                      <p>
-                          My approach combines analytical thinking with creative execution, ensuring every campaign delivers both 
-                          compelling storytelling and tangible results.
-                      </p>
-                      
-                      <div class="social-icons">
-                          <a href="https://www.facebook.com" class="social-icon" target="_blank" rel="noopener">
-                              <i class="fab fa-facebook-f"></i>
-                          </a>
-                          <a href="https://www.instagram.com" class="social-icon" target="_blank" rel="noopener">
-                              <i class="fab fa-instagram"></i>
-                          </a>
-                          <a href="https://www.twitter.com" class="social-icon" target="_blank" rel="noopener">
-                              <i class="fab fa-twitter"></i>
-                          </a>
-                          <a href="https://www.linkedin.com" class="social-icon" target="_blank" rel="noopener">
-                              <i class="fab fa-linkedin-in"></i>
-                          </a>
+              <div class="about-story">
+                  <div class="story-section">
+                      <h3 class="story-label">Creative Performance Architect</h3>
+                    <div class="story-content">
+                          <p>I help brands grow by leveraging data-driven insights and creative strategies. From corporate strategist to leading innovative campaigns, I thrive in transforming brands.</p>
                       </div>
                   </div>
               </div>
           </div>
       </section>
+
+
+
+
+
+      <!-- Testimonials Section -->
+    <section id="testimonials">
+        <div class="particles" id="particles"></div>
+        <div class="testimonials-container">
+            <div class="reels-grid">
+                <!-- Video 1 - Tall -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/16;">
+                        <wistia-player media-id="fx0tr3a1h9" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="">
+                            <div class="reel-info">
+                                <span class="reel-metric">2.3M views</span>
+                                <span class="reel-platform">TikTok</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 2 - Medium -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/12;">
+                        <wistia-player media-id="sbbrj9d2ag" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">1.8M views</span>
+                                <span class="reel-platform">Instagram</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 3 - Short -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/10;">
+                        <wistia-player media-id="os87c8vrvb" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">3.5M views</span>
+                                <span class="reel-platform">TikTok</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 4 - Tall -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/16;">
+                        <wistia-player media-id="b606gkduct" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">925K views</span>
+                                <span class="reel-platform">YouTube Shorts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 5 - Medium -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/14;">
+                        <wistia-player media-id="shz4x8pyt5" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">1.2M views</span>
+                                <span class="reel-platform">Facebook</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 6 - Square-ish -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/11;">
+                        <wistia-player media-id="dkzw4n1wr0" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">4.1M views</span>
+                                <span class="reel-platform">Instagram</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
   
     <!-- Core Principles Section -->
     <section id="principles" class="principles">
@@ -5911,6 +5968,20 @@
                 <a href="#">Terms of Service</a>
                 <a href="mailto:jeremiah@example.com">Contact</a>
             </div>
+                        <div class="social-icons">
+                          <a href="https://www.facebook.com" class="social-icon" target="_blank" rel="noopener">
+                              <i class="fab fa-facebook-f"></i>
+                          </a>
+                          <a href="https://www.instagram.com" class="social-icon" target="_blank" rel="noopener">
+                              <i class="fab fa-instagram"></i>
+                          </a>
+                          <a href="https://www.twitter.com" class="social-icon" target="_blank" rel="noopener">
+                              <i class="fab fa-twitter"></i>
+                          </a>
+                          <a href="https://www.linkedin.com" class="social-icon" target="_blank" rel="noopener">
+                              <i class="fab fa-linkedin-in"></i>
+                          </a>
+                      </div>
         </div>
     </footer>
 
@@ -5937,7 +6008,7 @@
             // Initialize custom cursor - DISABLED
             initCustomCursor();
             
-            // Fix mouse events to ensure normal interaction
+            // Fix mouse events to ensure normal interaction (call immediately)
             fixMouseEvents();
             
             // Initialize mobile menu
@@ -6394,6 +6465,16 @@
             document.body.style.pointerEvents = '';
             document.documentElement.style.overflow = '';
             document.documentElement.style.pointerEvents = '';
+            
+            // Simple Wistia font cleanup
+            setTimeout(() => {
+                const allElements = document.body.querySelectorAll('*');
+                allElements.forEach(el => {
+                    if (el.textContent && el.textContent.includes('@font-face')) {
+                        el.remove();
+                    }
+                });
+            }, 500);
             
             // Restore custom cursor functionality if it exists
             const cursor = document.getElementById('cursor');
@@ -7582,41 +7663,10 @@
             }
         }
 
-        // Custom cursor - DISABLED to fix mouse interaction issues
+        // Custom Cursor Disabled - Using Normal System Cursor
         function initCustomCursor() {
-            return; // Exit early - cursor disabled to fix mouse issues
-            
-            // Check if device supports hover
-            if (window.matchMedia('(hover: hover)').matches && window.matchMedia('(pointer: fine)').matches) {
-                const cursor = document.getElementById('cursor');
-                let mouseX = 0, mouseY = 0;
-                let cursorX = 0, cursorY = 0;
-                
-                document.addEventListener('mousemove', (e) => {
-                    mouseX = e.clientX;
-                    mouseY = e.clientY;
-                });
-                
-                // Smooth cursor animation
-                function animateCursor() {
-                    const speed = 0.15;
-                    cursorX += (mouseX - cursorX) * speed;
-                    cursorY += (mouseY - cursorY) * speed;
-                    
-                    cursor.style.left = cursorX + 'px';
-                    cursor.style.top = cursorY + 'px';
-                    
-                    requestAnimationFrame(animateCursor);
-                }
-                animateCursor();
-                
-                // Hover effects
-                const hoverElements = document.querySelectorAll('a, button, .attitude-card, .workflow-card, .faq-question, .reel-wrapper, .hero-btn, .trust-content, .quiz-radio-label, .quiz-range-input');
-                hoverElements.forEach(el => {
-                    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-                    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-                });
-            }
+            // Completely disabled - use normal system cursor
+            return;
         }
 
         // Smooth scrolling
@@ -7895,7 +7945,7 @@
                 '.stats-container, .journey-header, .timeline-item, ' +
                 '.principles-header, .attitude-card, .workflow-card, ' +
                 '.faqs-title, .faq-item, .trust-strip, ' +
-                '.about-header, .about-card, .services-header, .service-card'
+                '.about-header, .about-card, .services-header, .service-cards'
             );
             
             elementsToObserve.forEach(el => observer.observe(el));
@@ -8152,6 +8202,46 @@
             initializeVideoOptimization();
         });
 
+        // Service Carousel Controls
+        document.addEventListener('DOMContentLoaded', () => {
+            // Loop through each carousel
+            document.querySelectorAll(".service-carousel").forEach(carousel => {
+                const imgs = carousel.querySelectorAll("img");
+                let index = 0;
+
+                // Show first image
+                if (imgs.length > 0) {
+                    imgs[index].classList.add("active");
+                }
+
+                const controls = document.createElement("div");
+                controls.className = "carousel-controls";
+
+                const prevBtn = document.createElement("button");
+                prevBtn.className = "prev";
+                prevBtn.innerHTML = '<i class="fa fa-chevron-left" aria-hidden="true"></i><span class="icon-fallback">‹</span>';
+                const nextBtn = document.createElement("button");
+                nextBtn.className = "next";
+                nextBtn.innerHTML = '<i class="fa fa-chevron-right" aria-hidden="true"></i><span class="icon-fallback">›</span>';
+
+                controls.appendChild(prevBtn);
+                controls.appendChild(nextBtn);
+                carousel.appendChild(controls);
+
+                prevBtn.addEventListener("click", () => {
+                    imgs[index].classList.remove("active");
+                    index = (index === 0) ? imgs.length - 1 : index - 1;
+                    imgs[index].classList.add("active");
+                });
+
+                nextBtn.addEventListener("click", () => {
+                    imgs[index].classList.remove("active");
+                    index = (index === imgs.length - 1) ? 0 : index + 1;
+                    imgs[index].classList.add("active");
+                });
+            });
+        });
+
     </script>
 </body>
-</html>s
+</html>
