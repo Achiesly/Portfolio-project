@@ -1205,7 +1205,6 @@
             }
         }
 
-        /* Final Mobile Optimization Enhancements */
         
         /* Ensure all clickable elements meet minimum touch size */
         @media (max-width: 768px) {
@@ -1913,23 +1912,26 @@
         }
         /* Optimized Reels Grid */
         .reels-grid {
-            column-count: 4;
+            column-count: 3;
             column-gap: clamp(1rem, 2vw, 1.5rem);
             margin-top: clamp(3rem, 6vw, 4rem);
-            max-width: 1400px;
+            max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
+            padding: 0 clamp(2rem, 4vw, 3rem);
         }
         
         @media (max-width: 1200px) {
             .reels-grid {
                 column-count: 3;
+                max-width: 1000px;
             }
         }
         
         @media (max-width: 900px) {
             .reels-grid {
                 column-count: 2;
+                max-width: 700px;
             }
         }
         
@@ -1937,6 +1939,7 @@
             .reels-grid {
                 column-count: 1;
                 max-width: 400px;
+                padding: 0 clamp(1rem, 3vw, 2rem);
             }
         }
         
@@ -2017,6 +2020,259 @@
             font-size: clamp(0.75rem, 1.5vw, 0.85rem);
             font-weight: 500;
             z-index: 2;
+        }
+
+        /* Testimonial Cards - Integrated with Reels Grid */
+        .reel-testimonial-card {
+            background: rgba(245, 245, 245, 0.98);
+            border-radius: 16px;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            border: 1px solid rgba(230, 230, 230, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            break-inside: avoid;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 0.8s ease forwards;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reel-testimonial-card:nth-child(2) { animation-delay: 0.15s; }
+        .reel-testimonial-card:nth-child(4) { animation-delay: 0.35s; }
+        .reel-testimonial-card:nth-child(6) { animation-delay: 0.55s; }
+        .reel-testimonial-card:nth-child(8) { animation-delay: 0.75s; }
+
+        @media (hover: hover) {
+            .reel-testimonial-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+                background: rgba(252, 252, 252, 1);
+            }
+        }
+
+        .testimonial-quote {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            top: -0.2rem;
+            right: 0;
+            font-size: clamp(2.5rem, 4vw, 3rem);
+            font-family: Georgia, serif;
+            color: rgba(0, 0, 0, 0.08);
+            line-height: 0.8;
+            z-index: 0;
+        }
+
+        .testimonial-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #000;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+        
+        /* Author Photo Wrapper - Guarantees perfect circle */
+        .author-photo-wrapper {
+            width: 60px !important;
+            height: 60px !important;
+            border-radius: 50% !important;
+            overflow: hidden !important;
+            flex-shrink: 0 !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+            background: #f0f0f0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        .author-photo-wrapper img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center top !important;
+            border: none !important;
+            display: block !important;
+            image-rendering: auto !important;
+            backface-visibility: hidden !important;
+            transform: translateZ(0) !important;
+            filter: contrast(1.05) brightness(1.01) saturate(1.1) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        /* Large testimonials wrapper */
+        .reel-testimonial-card.large .author-photo-wrapper,
+        .portfolio-testimonial-card.large .author-photo-wrapper {
+            width: 65px !important;
+            height: 65px !important;
+        }
+        
+        /* Portfolio testimonials wrapper */
+        .portfolio-testimonial-card .author-photo-wrapper {
+            width: 60px !important;
+            height: 60px !important;
+            border-radius: 50% !important;
+            overflow: hidden !important;
+            flex-shrink: 0 !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+            background: #f0f0f0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        /* Individual image positioning for better face cropping */
+        img[src*="linsay-reint.jpg"] { object-position: center 20% !important; }
+        img[src*="augustina-remoche.jpg"] { object-position: center 25% !important; }
+        img[src*="henry-merchant.jpg"] { object-position: center 15% !important; }
+        img[src*="lexi-kim.jpg"] { object-position: center 30% !important; }
+        img[src*="thomas-welch.jpg"] { object-position: center 20% !important; }
+        img[src*="patrick-mcarmik.jpg"] { object-position: center 25% !important; }
+        img[src*="alex-moka.jpg"] { object-position: center 20% !important; }
+        img[src*="david-bellador.jpg"] { object-position: center 20% !important; }
+        
+        /* Hover effects for testimonial photos */
+        .author-photo-wrapper:hover img {
+            transform: scale(1.05) translateZ(0) !important;
+            filter: contrast(1.1) brightness(1.05) saturate(1.15) !important;
+        }
+        
+        /* Optimize rendering for large images scaled down */
+        .author-photo-wrapper {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: optimize-contrast;
+            will-change: transform;
+        }
+        
+        .author-photo-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            min-width: 100%;
+            min-height: 100%;
+        }
+
+        img.author-photo {
+            width: 60px !important;
+            height: 60px !important;
+            border-radius: 50% !important;
+            flex-shrink: 0 !important;
+            border: none !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+            overflow: hidden !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            image-rendering: -webkit-optimize-contrast !important;
+            image-rendering: crisp-edges !important;
+            backface-visibility: hidden !important;
+            transform: translateZ(0) !important;
+            filter: contrast(1.1) brightness(1.02) !important;
+            display: block !important;
+            clip-path: circle(50%) !important;
+            -webkit-clip-path: circle(50%) !important;
+        }
+        
+        /* Aggressive fallback - target ANY img inside testimonial-author */
+        .testimonial-author img,
+        .portfolio-testimonial-card .testimonial-author img {
+            width: 60px !important;
+            height: 60px !important;
+            border-radius: 50% !important;
+            flex-shrink: 0 !important;
+            border: none !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+            overflow: hidden !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            image-rendering: -webkit-optimize-contrast !important;
+            image-rendering: crisp-edges !important;
+            backface-visibility: hidden !important;
+            transform: translateZ(0) !important;
+            filter: contrast(1.1) brightness(1.02) !important;
+            display: block !important;
+            clip-path: circle(50%) !important;
+            -webkit-clip-path: circle(50%) !important;
+            max-width: 60px !important;
+            max-height: 60px !important;
+            min-width: 60px !important;
+            min-height: 60px !important;
+        }
+
+        .author-info {
+            flex: 1;
+        }
+
+        .author-name {
+            font-weight: 500;
+            font-size: clamp(0.9rem, 1.4vw, 0.95rem);
+            color: #000000;
+            margin: 0 0 0.15rem 0;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+        }
+
+        .author-title {
+            font-size: clamp(0.75rem, 1vw, 0.8rem);
+            color: #838282;
+            margin: 0;
+            font-weight: 200;
+            line-height: 1.3;
+        }
+
+        /* Large testimonial variant */
+        .reel-testimonial-card.large {
+            padding: clamp(1.75rem, 3.5vw, 2rem);
+        }
+
+        .reel-testimonial-card.large .testimonial-text {
+            font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+            line-height: 1.5;
+        }
+
+        .reel-testimonial-card.large .author-photo {
+            width: 65px !important;
+            height: 65px !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        .reel-testimonial-card.large .testimonial-quote::before {
+            font-size: clamp(4.5rem, 7vw, 5rem);
+        }
+
+        @media (max-width: 768px) {
+            .reel-testimonial-card {
+                padding: clamp(1.25rem, 4vw, 1.5rem);
+            }
+            
+            .reel-testimonial-card.large {
+                padding: clamp(1.5rem, 5vw, 2rem);
+            }
+            
+            .testimonial-quote::before {
+                font-size: clamp(3.5rem, 7vw, 4rem);
+            }
+            
+            .reel-testimonial-card.large .testimonial-quote::before {
+                font-size: clamp(4rem, 8vw, 5rem);
+            }
         }
         
         .reel-metric {
@@ -2181,7 +2437,7 @@
     height: clamp(80px, 12vw, 120px);
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #fff;
+    border: none;
     box-shadow: 0 8px 32px rgba(0,0,0,0.12);
 }
 
@@ -3427,23 +3683,26 @@
         
         /* Portfolio Video Masonry Grid - Same as reels grid */
         .portfolio-reels-grid {
-            column-count: 4;
+            column-count: 3;
             column-gap: clamp(1rem, 2vw, 1.5rem);
             margin-top: clamp(3rem, 6vw, 4rem);
-            max-width: 1400px;
+            max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
+            padding: 0 clamp(2rem, 4vw, 3rem);
         }
         
         @media (max-width: 1200px) {
             .portfolio-reels-grid {
                 column-count: 3;
+                max-width: 1000px;
             }
         }
         
         @media (max-width: 900px) {
             .portfolio-reels-grid {
                 column-count: 2;
+                max-width: 700px;
             }
         }
         
@@ -3451,6 +3710,7 @@
             .portfolio-reels-grid {
                 column-count: 1;
                 max-width: 400px;
+                padding: 0 clamp(1rem, 3vw, 2rem);
             }
         }
         
@@ -3550,6 +3810,156 @@
             font-weight: 600;
             position: relative;
             overflow: hidden;
+        }
+
+        /* Portfolio Testimonial Cards - Same as reels testimonials */
+        .portfolio-testimonial-card {
+            background: rgba(245, 245, 245, 0.98);
+            border-radius: 16px;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            border: 1px solid rgba(230, 230, 230, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            break-inside: avoid;
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: fadeInUp 0.8s ease forwards;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .portfolio-testimonial-card:nth-child(2) { animation-delay: 0.15s; }
+        .portfolio-testimonial-card:nth-child(4) { animation-delay: 0.35s; }
+        .portfolio-testimonial-card:nth-child(6) { animation-delay: 0.55s; }
+        .portfolio-testimonial-card:nth-child(8) { animation-delay: 0.75s; }
+        .portfolio-testimonial-card:nth-child(10) { animation-delay: 0.95s; }
+        .portfolio-testimonial-card:nth-child(12) { animation-delay: 1.15s; }
+
+        @media (hover: hover) {
+            .portfolio-testimonial-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+                background: rgba(252, 252, 252, 1);
+            }
+        }
+
+        .portfolio-testimonial-card .testimonial-quote {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+
+        .portfolio-testimonial-card .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            top: -0.2rem;
+            right: 0;
+            font-size: clamp(2.5rem, 4vw, 3rem);
+            font-family: Georgia, serif;
+            color: rgba(0, 0, 0, 0.08);
+            line-height: 0.8;
+            z-index: 0;
+        }
+
+        .portfolio-testimonial-card .testimonial-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #000;
+            font-weight: 500;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .portfolio-testimonial-card .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+
+        .portfolio-testimonial-card img.author-photo {
+            width: 45px !important;
+            height: 45px !important;
+            border-radius: 50% !important;
+            flex-shrink: 0 !important;
+            border: none !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+            overflow: hidden !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            image-rendering: -webkit-optimize-contrast !important;
+            image-rendering: crisp-edges !important;
+            backface-visibility: hidden !important;
+            transform: translateZ(0) !important;
+            filter: contrast(1.05) brightness(0.98) !important;
+            display: block !important;
+            clip-path: circle(50%) !important;
+            -webkit-clip-path: circle(50%) !important;
+        }
+
+        .portfolio-testimonial-card .author-info {
+            flex: 1;
+        }
+
+        .portfolio-testimonial-card .author-name {
+            font-weight: 500;
+            font-size: clamp(0.9rem, 1.4vw, 0.95rem);
+            color: #000000;
+            margin: 0 0 0.15rem 0;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+        }
+
+        .portfolio-testimonial-card .author-title {
+            font-size: clamp(0.75rem, 1vw, 0.8rem);
+            color: #838282;
+            margin: 0;
+            font-weight: 200;
+            line-height: 1.3;
+        }
+
+        /* Large portfolio testimonial variant */
+        .portfolio-testimonial-card.large {
+            padding: clamp(1.75rem, 3.5vw, 2rem);
+            background: rgba(245, 245, 245, 0.98);
+        }
+
+        .portfolio-testimonial-card.large .testimonial-text {
+            font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+            line-height: 1.5;
+        }
+
+        .portfolio-testimonial-card.large .author-photo {
+            width: 65px !important;
+            height: 65px !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        .portfolio-testimonial-card.large .testimonial-quote::before {
+            font-size: clamp(4.5rem, 7vw, 5rem);
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-testimonial-card {
+                padding: clamp(1.25rem, 4vw, 1.5rem);
+            }
+            
+            .portfolio-testimonial-card.large {
+                padding: clamp(1.5rem, 5vw, 2rem);
+            }
+            
+            .portfolio-testimonial-card .testimonial-quote::before {
+                font-size: clamp(3.5rem, 7vw, 4rem);
+            }
+            
+            .portfolio-testimonial-card.large .testimonial-quote::before {
+                font-size: clamp(4rem, 8vw, 5rem);
+            }
         }
         
         /* Optimized Principles Section */
@@ -4778,6 +5188,23 @@
         footer .social-icon i {
             font-size: 0.8rem !important;
             line-height: 1 !important;
+            z-index: 2 !important;
+            position: relative !important;
+        }
+        
+        /* Ensure X icon displays properly */
+        footer .social-icon i.fa-brands,
+        footer .social-icon i.fab {
+            display: inline-block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        
+        /* Specific fix for X/Twitter icon */
+        footer .social-icon .fa-x-twitter,
+        footer .social-icon .fa-twitter {
+            font-family: "Font Awesome 6 Brands", "Font Awesome 5 Brands" !important;
+            font-weight: 400 !important;
         }
 
         footer .social-icon::before {
@@ -4786,11 +5213,7 @@
 
         @media (hover: hover) {
             footer .social-icon:hover {
-                transform: translateY(-2px) !important;
-                background: rgba(255, 255, 255, 0.1) !important;
-                border-color: var(--accent-green) !important;
-                color: var(--accent-green) !important;
-                box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2) !important;
+                transform: translateY(-1px) !important;
             }
 
             footer .social-icon:hover::before {
@@ -5312,11 +5735,12 @@
     <section id="video-reels" class="video-reels">
         <div class="particles" id="particles"></div>
         <div class="video-reels-container">
+
             <div class="reels-grid">
                 <!-- Video 1 - Tall -->
                 <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/16;">
-                        <wistia-player media-id="fx0tr3a1h9" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                    <div class="reel-wrapper" style="aspect-ratio: 9/14;">
+                        <wistia-player media-id="fx0tr3a1h9" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
                         <div class="reel-overlay">
                             <div class="reel-info">
                                 <span class="reel-metric">2.3M views</span>
@@ -5326,10 +5750,26 @@
                     </div>
                 </div>
                 
+                <!-- Testimonial 1 - Lindsay Seligman -->
+                <div class="reel-testimonial-card">
+                    <div class="testimonial-quote">
+                        <p class="testimonial-text">Great video work for FB ads, super detail oriented and excellent communicator. Goes above and beyond.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-photo-wrapper">
+                            <img src="Assets/linsay-reint.jpg" alt="Linsay Reint">
+                        </div>
+                        <div class="author-info">
+                            <div class="author-name">Linsay Reint</div>
+                            <div class="author-title">Senior Creative Strategist at Jade</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Video 2 - Medium -->
                 <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/12;">
-                        <wistia-player media-id="sbbrj9d2ag" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                    <div class="reel-wrapper" style="aspect-ratio: 9/11;">
+                        <wistia-player media-id="sbbrj9d2ag" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
                         <div class="reel-overlay">
                             <div class="reel-info">
                                 <span class="reel-metric">1.8M views</span>
@@ -5339,10 +5779,26 @@
                     </div>
                 </div>
                 
+                <!-- Testimonial 2 - Dante Frangillo -->
+                <div class="reel-testimonial-card">
+                    <div class="testimonial-quote">
+                        <p class="testimonial-text">Jeremiah was excellent at helping us create content that performed well across our social channels!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-photo-wrapper">
+                            <img src="Assets/augustina-remoche.jpg" alt="Augustina Remoche">
+                        </div>
+                        <div class="author-info">
+                            <div class="author-name">Augustina Remoche</div>
+                            <div class="author-title">Co-founder at Sculpiflex</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Video 3 - Short -->
                 <div class="reel-card">
                     <div class="reel-wrapper" style="aspect-ratio: 9/10;">
-                        <wistia-player media-id="os87c8vrvb" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <wistia-player media-id="os87c8vrvb" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
                         <div class="reel-overlay">
                             <div class="reel-info">
                                 <span class="reel-metric">3.5M views</span>
@@ -5352,10 +5808,26 @@
                     </div>
                 </div>
                 
+                <!-- Testimonial 3 - Artiom Shcheglov (Large) -->
+                <div class="reel-testimonial-card large">
+                    <div class="testimonial-quote">
+                        <p class="testimonial-text">Jeremiah is always on the ball, and his ability to take our ideas and turn them into reality is simply amazing. Jeremiah is a true professional who takes pride in his work and goes above and beyond to make sure our projects are a success.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-photo-wrapper">
+                            <img src="Assets/henry-merchant.jpg" alt="Henry Merchant">
+                        </div>
+                        <div class="author-info">
+                            <div class="author-name">Henry Merchant</div>
+                            <div class="author-title">Head of Marketing & Communications at Athena</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Video 4 - Tall -->
                 <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/16;">
-                        <wistia-player media-id="b606gkduct" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                    <div class="reel-wrapper" style="aspect-ratio: 9/13;">
+                        <wistia-player media-id="b606gkduct" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
                         <div class="reel-overlay">
                             <div class="reel-info">
                                 <span class="reel-metric">925K views</span>
@@ -5367,8 +5839,8 @@
                 
                 <!-- Video 5 - Medium -->
                 <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/14;">
-                        <wistia-player media-id="shz4x8pyt5" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                    <div class="reel-wrapper" style="aspect-ratio: 9/12;">
+                        <wistia-player media-id="shz4x8pyt5" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
                         <div class="reel-overlay">
                             <div class="reel-info">
                                 <span class="reel-metric">1.2M views</span>
@@ -5378,10 +5850,26 @@
                     </div>
                 </div>
                 
+                <!-- Testimonial 4 --->
+                <div class="reel-testimonial-card">
+                    <div class="testimonial-quote">
+                        <p class="testimonial-text">Jeremiah is a fantastic creative partner. He excels at taking existing content and sourcing new content to create ads that look great and perform well.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-photo-wrapper">
+                            <img src="Assets/lexi-kim.jpg" alt="Lexi Kim">
+                        </div>
+                        <div class="author-info">
+                            <div class="author-name">Lexi Kim</div>
+                            <div class="author-title">Marketing Creative Producer at Illest View</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Video 6 - Square-ish -->
                 <div class="reel-card">
                     <div class="reel-wrapper" style="aspect-ratio: 9/11;">
-                        <wistia-player media-id="dkzw4n1wr0" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <wistia-player media-id="dkzw4n1wr0" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
                         <div class="reel-overlay">
                             <div class="reel-info">
                                 <span class="reel-metric">4.1M views</span>
@@ -5390,7 +5878,86 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Video 7 - Tall -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/13;">
+                        <wistia-player media-id="f4pg22t46p" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">1.9M views</span>
+                                <span class="reel-platform">TikTok</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 8 - Medium -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/11;">
+                        <wistia-player media-id="urul1qdxg0" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">2.7M views</span>
+                                <span class="reel-platform">Instagram</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 9 - Short -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/10;">
+                        <wistia-player media-id="5j96facrfq" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">1.4M views</span>
+                                <span class="reel-platform">YouTube Shorts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 10 - Tall -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/12;">
+                        <wistia-player media-id="dzwspp5lfe" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">3.2M views</span>
+                                <span class="reel-platform">TikTok</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 11 - Medium -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/11;">
+                        <wistia-player media-id="ktw4hsumt8" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">850K views</span>
+                                <span class="reel-platform">Facebook</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 12 - Tall -->
+                <div class="reel-card">
+                    <div class="reel-wrapper" style="aspect-ratio: 9/13;">
+                        <wistia-player media-id="1iu0jtd817" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="reel-overlay">
+                            <div class="reel-info">
+                                <span class="reel-metric">2.1M views</span>
+                                <span class="reel-platform">Instagram</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             
             <!-- See Full Portfolio Button -->
             <div class="portfolio-cta-container">
@@ -5402,7 +5969,7 @@
         </div>
     </section>
     
-<!-- My Services Section -->
+<!-- Services Section -->
             <section id="services" class="services-section">
             <div class="services-container">
                 <div class="services-header">
@@ -5491,8 +6058,8 @@
             <div class="portfolio-reels-grid">
                 <!-- Portfolio Video 1 -->
                 <div class="portfolio-reel-card">
-                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/16;">
-                        <wistia-player media-id="asoftd14pu" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/14;">
+                        <wistia-player media-id="asoftd14pu" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
                         <div class="portfolio-overlay">
                             <div class="portfolio-info">
                                 <span class="portfolio-metric">8.2M reach</span>
@@ -5502,10 +6069,26 @@
                     </div>
                 </div>
                 
+                <!-- Portfolio Testimonial 1 - Michael Chen -->
+                <div class="portfolio-testimonial-card">
+                    <div class="testimonial-quote">
+                        <p class="testimonial-text">Working with Jeremiah on our social media E-commerce UGC ads has been a fantastic experience.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-photo-wrapper">
+                            <img src="Assets/thomas-welch.jpg" alt="Thomas Welch">
+                        </div>
+                        <div class="author-info">
+                            <div class="author-name">Thomas Welch</div>
+                            <div class="author-title">Founder at Nuvera</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Portfolio Video 2 -->
                 <div class="portfolio-reel-card">
-                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/14;">
-                        <wistia-player media-id="0l19efg1jt" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>                    
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/12;">
+                        <wistia-player media-id="0l19efg1jt" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>                    
                         <div class="portfolio-overlay">
                             <div class="portfolio-info">
                                 <span class="portfolio-metric">320% ROAS</span>
@@ -5515,10 +6098,26 @@
                     </div>
                 </div>
                 
+                <!-- Portfolio Testimonial 2 - Jessica Rodriguez -->
+                <div class="portfolio-testimonial-card">
+                    <div class="testimonial-quote">
+                        <p class="testimonial-text">Honestly, Jeremiah is top notch and has a great team of copywriters to assist with generating scripts and content. Turnaround time is ridiculously fast and our videos are performing well on Meta ads. Highly recommended!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-photo-wrapper">
+                            <img src="Assets/patrick-mcarmik.jpg" alt="Patrick Mcarmik">
+                        </div>
+                        <div class="author-info">
+                            <div class="author-name">Patrick Mcarmik</div>
+                            <div class="author-title">Creative Strategist at BlitzPop</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Portfolio Video 3 -->
                 <div class="portfolio-reel-card">
-                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/12;">
-                        <wistia-player media-id="glq2nisk1j" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/11;">
+                        <wistia-player media-id="glq2nisk1j" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
                         <div class="portfolio-overlay">
                             <div class="portfolio-info">
                                 <span class="portfolio-metric">$1.2M revenue</span>
@@ -5528,14 +6127,150 @@
                     </div>
                 </div>
                 
+                <!-- Portfolio Testimonial 3 - David Thompson (Large) -->
+                <div class="portfolio-testimonial-card large">
+                    <div class="testimonial-quote">
+                        <p class="testimonial-text">If you need some great video creatives with strong performance, Jeremiah is your guy! We've spent quite some time with him working on the project and achieved some solid results, highly recommend Jeremiah as a Professional. He could be an absolutely great asset to your team.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-photo-wrapper">
+                            <img src="Assets/alex-moka.jpg" alt="Alex Moka">
+                        </div>
+                        <div class="author-info">
+                            <div class="author-name">Alex Moka</div>
+                            <div class="author-title">Founder of Fancy Nooks</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Portfolio Video 4 -->
                 <div class="portfolio-reel-card">
-                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/16;">
-                    <wistia-player media-id="5j96facrfq" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/13;">
+                        <wistia-player media-id="69qiuv07hz" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
                         <div class="portfolio-overlay">
                             <div class="portfolio-info">
                                 <span class="portfolio-metric">45% CTR boost</span>
                                 <span class="portfolio-client">E-commerce</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Video 5 -->
+                <div class="portfolio-reel-card">
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/12;">
+                        <wistia-player media-id="lbokfo5iv3" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <span class="portfolio-metric">5.8M impressions</span>
+                                <span class="portfolio-client">Fitness</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Testimonial 4 --->
+                <div class="portfolio-testimonial-card">
+                    <div class="testimonial-quote">
+                        <p class="testimonial-text">Great ads! We used them for our PPC campaigns, and the results were fantastic. Highly recommended!</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-photo-wrapper">
+                            <img src="Assets/david-bellador.jpg" alt="David Bellador">
+                        </div>
+                        <div class="author-info">
+                            <div class="author-name">David Bellador</div>
+                            <div class="author-title">Co-Founder & CEO of Jetsetter</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Video 6 -->
+                <div class="portfolio-reel-card">
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/11;">
+                        <wistia-player media-id="1iu0jtd817" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <span class="portfolio-metric">450% ROI</span>
+                                <span class="portfolio-client">SaaS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Video 7 -->
+                <div class="portfolio-reel-card">
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/13;">
+                        <wistia-player media-id="hx2b7f8z7l" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <span class="portfolio-metric">2.4M reach</span>
+                                <span class="portfolio-client">Healthcare</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Video 8 -->
+                <div class="portfolio-reel-card">
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/12;">
+                        <wistia-player media-id="idyc2rfkjp" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <span class="portfolio-metric">180% conv. lift</span>
+                                <span class="portfolio-client">Retail</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Video 9 -->
+                <div class="portfolio-reel-card">
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/11;">
+                        <wistia-player media-id="axpdql1sfx" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <span class="portfolio-metric">3.7M views</span>
+                                <span class="portfolio-client">Food & Beverage</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Video 10 -->
+                <div class="portfolio-reel-card">
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/13;">
+                        <wistia-player media-id="2exlvz5s5n" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <span class="portfolio-metric">265% ROAS</span>
+                                <span class="portfolio-client">Travel</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Video 11 -->
+                <div class="portfolio-reel-card">
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/12;">
+                        <wistia-player media-id="hisd0uu37o" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <span class="portfolio-metric">6.1M impressions</span>
+                                <span class="portfolio-client">Automotive</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Video 12 -->
+                <div class="portfolio-reel-card">
+                    <div class="portfolio-reel-wrapper" style="aspect-ratio: 9/11;">
+                        <wistia-player media-id="pdnecz4ppl" aspect="0.5625" muted="true" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <span class="portfolio-metric">95% engagement</span>
+                                <span class="portfolio-client">Education</span>
                             </div>
                         </div>
                     </div>
@@ -5564,96 +6299,6 @@
           </div>
       </section>
 
-
-
-
-
-      <!-- Testimonials Section -->
-    <section id="testimonials">
-        <div class="particles" id="particles"></div>
-        <div class="testimonials-container">
-            <div class="reels-grid">
-                <!-- Video 1 - Tall -->
-                <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/16;">
-                        <wistia-player media-id="fx0tr3a1h9" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
-                        <div class="">
-                            <div class="reel-info">
-                                <span class="reel-metric">2.3M views</span>
-                                <span class="reel-platform">TikTok</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Video 2 - Medium -->
-                <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/12;">
-                        <wistia-player media-id="sbbrj9d2ag" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
-                        <div class="reel-overlay">
-                            <div class="reel-info">
-                                <span class="reel-metric">1.8M views</span>
-                                <span class="reel-platform">Instagram</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Video 3 - Short -->
-                <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/10;">
-                        <wistia-player media-id="os87c8vrvb" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
-                        <div class="reel-overlay">
-                            <div class="reel-info">
-                                <span class="reel-metric">3.5M views</span>
-                                <span class="reel-platform">TikTok</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Video 4 - Tall -->
-                <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/16;">
-                        <wistia-player media-id="b606gkduct" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
-                        <div class="reel-overlay">
-                            <div class="reel-info">
-                                <span class="reel-metric">925K views</span>
-                                <span class="reel-platform">YouTube Shorts</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Video 5 - Medium -->
-                <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/14;">
-                        <wistia-player media-id="shz4x8pyt5" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
-                        <div class="reel-overlay">
-                            <div class="reel-info">
-                                <span class="reel-metric">1.2M views</span>
-                                <span class="reel-platform">Facebook</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Video 6 - Square-ish -->
-                <div class="reel-card">
-                    <div class="reel-wrapper" style="aspect-ratio: 9/11;">
-                        <wistia-player media-id="dkzw4n1wr0" aspect="0.5625" style="display:block; width:100%; height:auto; border-radius:16px; overflow:hidden;"></wistia-player>
-                        <div class="reel-overlay">
-                            <div class="reel-info">
-                                <span class="reel-metric">4.1M views</span>
-                                <span class="reel-platform">Instagram</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
 
   
     <!-- Core Principles Section -->
@@ -5969,16 +6614,14 @@
                 <a href="mailto:jeremiah@example.com">Contact</a>
             </div>
                         <div class="social-icons">
-                          <a href="https://www.facebook.com" class="social-icon" target="_blank" rel="noopener">
-                              <i class="fab fa-facebook-f"></i>
-                          </a>
-                          <a href="https://www.instagram.com" class="social-icon" target="_blank" rel="noopener">
+                          <a href="https://www.instagram.com/jeremiahpr" class="social-icon" target="_blank" rel="noopener">
                               <i class="fab fa-instagram"></i>
                           </a>
-                          <a href="https://www.twitter.com" class="social-icon" target="_blank" rel="noopener">
-                              <i class="fab fa-twitter"></i>
+                          <a href="https://x.com/jeremiahecom" class="social-icon" target="_blank" rel="noopener">
+                              <i class="fa-brands fa-x-twitter"></i>
+                              <span style="font-weight: bold; font-size: 12px; display: inline-block;">𝕏</span>
                           </a>
-                          <a href="https://www.linkedin.com" class="social-icon" target="_blank" rel="noopener">
+                          <a href="https://www.linkedin.com/in/jeremiah-harcharran-95948b207" class="social-icon" target="_blank" rel="noopener">
                               <i class="fab fa-linkedin-in"></i>
                           </a>
                       </div>
