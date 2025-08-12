@@ -250,7 +250,15 @@
             list-style: none;
             align-items: center;
             margin: 0;
+            margin-left: auto;
             padding: 0;
+        }
+        
+        /* Separate wrapper for nav-cta to prevent conflicts */
+        .nav-cta-wrapper {
+            display: flex;
+            align-items: center;
+            margin-left: clamp(2rem, 4vw, 3rem);
         }
         
         .nav-links a {
@@ -295,16 +303,23 @@
             text-shadow: 0 0 10px var(--glow-green);
         }
         
-        .nav-cta {
+        /* Completely isolated nav-cta styles */
+        .nav-cta-wrapper .nav-cta {
             background: var(--accent-green);
             color: var(--primary-black) !important;
             padding: clamp(0.5rem, 1vw, 0.6rem) clamp(1rem, 2vw, 1.5rem) !important;
             border-radius: 8px;
             font-weight: 600 !important;
+            text-decoration: none;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.3s ease, filter 0.3s ease;
             white-space: nowrap;
+            display: inline-block;
+            cursor: pointer;
+            /* Completely isolated from nav-links styles */
+            opacity: 1;
+            font-size: clamp(0.875rem, 1.5vw, 0.95rem);
         }
         
         .nav-cta::before {
@@ -323,9 +338,9 @@
         }
         
         @media (hover: hover) {
-            .nav-cta:hover {
-                transform: translateY(-2px);
+            .nav-cta-wrapper .nav-cta:hover {
                 box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
+                filter: brightness(1.1);
             }
         }
         
@@ -447,7 +462,8 @@
             .nav-links a:hover,
             .nav-links a:active {
                 background: rgba(0, 255, 136, 0.1);
-                transform: translateY(-1px);
+                backface-visibility: hidden;
+                will-change: auto;
             }
             
             .nav-cta {
@@ -5619,8 +5635,10 @@
                     <li><a href="#portfolio">Portfolio</a></li>
                     <li><a href="#principles">Principles</a></li>
                     <li><a href="#faqs">FAQs</a></li>
-                    <li><a href="#contact" class="nav-cta">Let's Talk</a></li>
                 </ul>
+                <div class="nav-cta-wrapper">
+                    <a href="#contact" class="nav-cta">Let's Talk</a>
+                </div>
                 <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle mobile menu">
                     <span></span>
                     <span></span>
@@ -8051,7 +8069,7 @@
         
         // GOOGLE SHEETS INTEGRATION
  
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwTVirCnPW3HWTgyoKNjiajjM__A7sBlmWZn04bP1_OW6p5hKKoV13OqhCZsGOi7V8/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyPgQsj34pZsZn8VeXnr27C9RZIQ09DBzwo72xLdt3RA1DhVxyCtlh0nFRozKmQsp0f4A/exec';
         
         async function submitToGoogleSheets(quizData) {
             
